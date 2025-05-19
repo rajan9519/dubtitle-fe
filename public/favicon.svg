@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="faviconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366F1" />
+      <stop offset="100%" stop-color="#EC4899" />
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="8" fill="url(#faviconGradient)" />
+  <text x="7" y="22" font-family="Arial, sans-serif" font-weight="bold" font-size="16" fill="white">
+    D
+  </text>
+  <path d="M18,16 C18,16 20,18 24,18 C28,18 26,16 26,16" stroke="white" stroke-width="2" fill="none" />
+</svg> 
