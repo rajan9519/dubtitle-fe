@@ -10,7 +10,7 @@ export default function AcceptableUse() {
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Overview</h2>
               <p className="text-gray-700 mb-4">
-                This Acceptable Use Policy ("Policy") governs your use of DubTitle's services. By using our services,
+                This Acceptable Use Policy (&quot;Policy&quot;) governs your use of DubTitle&apos;s services. By using our services,
                 you agree to comply with this Policy. Violation of this Policy may result in suspension or termination of your account.
               </p>
             </section>
@@ -18,7 +18,7 @@ export default function AcceptableUse() {
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Permitted Uses</h2>
               <p className="text-gray-700 mb-4">
-                You may use DubTitle's services for legitimate purposes, including:
+                You may use DubTitle&apos;s services for legitimate purposes, including:
               </p>
               <ul className="list-disc pl-6 text-gray-700 space-y-2">
                 <li>Creating dubbed content for educational purposes</li>
@@ -33,7 +33,7 @@ export default function AcceptableUse() {
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Prohibited Uses</h2>
               <p className="text-gray-700 mb-4">
-                You may NOT use DubTitle's services for:
+                You may NOT use DubTitle&apos;s services for:
               </p>
               
               <div className="mb-6">
@@ -75,7 +75,7 @@ export default function AcceptableUse() {
                   <li>Overloading our systems with excessive requests</li>
                   <li>Circumventing usage limits or restrictions</li>
                   <li>Distributing malware or viruses</li>
-                  <li>Unauthorized access to other users' accounts</li>
+                  <li>Unauthorized access to other users&apos; accounts</li>
                 </ul>
               </div>
             </section>

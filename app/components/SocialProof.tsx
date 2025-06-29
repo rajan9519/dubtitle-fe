@@ -106,7 +106,7 @@ export default function SocialProof() {
                   ))}
                 </div>
                 
-                <p className="text-gray-700 mb-4 leading-relaxed">"{testimonial.text}"</p>
+                <p className="text-gray-700 mb-4 leading-relaxed">&quot;{testimonial.text}&quot;</p>
                 
                 <div className="bg-purple-50 border border-purple-200 rounded-lg p-3">
                   <div className="text-purple-700 text-sm font-bold">Result: {testimonial.metrics}</div>

@@ -339,7 +339,7 @@ export default function FileUpload({ onUploadComplete, onUploadError }: FileUplo
                     style={{ width: `${uploadProgress}%` }}
                   />
                 </div>
-                <p className="text-sm text-gray-300 text-center">Please don't close this page</p>
+                <p className="text-sm text-gray-300 text-center">Please don&apos;t close this page</p>
               </div>
             )}
 

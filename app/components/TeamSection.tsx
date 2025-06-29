@@ -37,7 +37,7 @@ export default function TeamSection() {
             The Minds Behind <span className="text-blue-600">DubTitle</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-12">
-            We're a team of AI researchers, engineers, and creators who experienced the pain of traditional dubbing firsthand. 
+            We&apos;re a team of AI researchers, engineers, and creators who experienced the pain of traditional dubbing firsthand. 
             Our mission is to democratize global content creation.
           </p>
         </div>
@@ -52,9 +52,9 @@ export default function TeamSection() {
             </div>
             <div className="flex-1">
               <blockquote className="text-lg text-gray-700 italic mb-6 leading-relaxed">
-                "I spent $5,000 trying to dub my tutorial series into Spanish. It took 3 months, the quality was inconsistent, 
-                and I almost gave up on reaching global audiences. That's when I knew there had to be a better way. 
-                Today, creators dub their content in minutes for under $100 – that's the transformation I dreamed of."
+                &quot;I spent $5,000 trying to dub my tutorial series into Spanish. It took 3 months, the quality was inconsistent, 
+                and I almost gave up on reaching global audiences. That&apos;s when I knew there had to be a better way. 
+                Today, creators dub their content in minutes for under $100 – that&apos;s the transformation I dreamed of.&quot;
               </blockquote>
               <div className="text-blue-600 font-medium">
                 – Alex Rivera, CEO & Founder

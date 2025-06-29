@@ -10,7 +10,7 @@ export default function TermsOfService() {
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Acceptance of Terms</h2>
               <p className="text-gray-700 mb-4">
-                By accessing and using DubTitle's services, you accept and agree to be bound by the terms and provision of this agreement.
+                By accessing and using DubTitle&apos;s services, you accept and agree to be bound by the terms and provision of this agreement.
                 If you do not agree to abide by the above, please do not use this service.
               </p>
             </section>

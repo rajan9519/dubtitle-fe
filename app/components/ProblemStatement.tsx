@@ -49,7 +49,7 @@ export default function ProblemStatement() {
               <h3 className="text-xl font-bold text-gray-900 mb-3">{problem.title}</h3>
               <p className="text-gray-600 mb-4 font-medium">{problem.description}</p>
               <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded">
-                <p className="text-red-700 text-sm italic">"{problem.example}"</p>
+                <p className="text-red-700 text-sm italic">&quot;{problem.example}&quot;</p>
               </div>
             </div>
           ))}
@@ -74,9 +74,9 @@ export default function ProblemStatement() {
                   </div>
                 </div>
                 <p className="text-gray-700 italic">
-                  "I created an amazing tutorial that went viral in English. But I'm missing out on 
+                  &quot;I created an amazing tutorial that went viral in English. But I&apos;m missing out on 
                   Spanish, French, and German audiences. Professional dubbing costs more than I make 
-                  from the video!"
+                  from the video!&quot;
                 </p>
               </div>
             </div>
@@ -87,7 +87,7 @@ export default function ProblemStatement() {
                 <ul className="space-y-3 text-red-800">
                   <li className="flex items-start">
                     <span className="text-red-500 mr-2">•</span>
-                    <span>75% of internet users don't speak English as first language</span>
+                    <span>75% of internet users don&apos;t speak English as first language</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-red-500 mr-2">•</span>
@@ -95,7 +95,7 @@ export default function ProblemStatement() {
                   </li>
                   <li className="flex items-start">
                     <span className="text-red-500 mr-2">•</span>
-                    <span>You're leaving money on the table every day</span>
+                    <span>You&apos;re leaving money on the table every day</span>
                   </li>
                 </ul>
               </div>

@@ -1,37 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-
 export default function Urgency() {
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  });
-
-  useEffect(() => {
-    // Set target date to 7 days from now
-    const targetDate = new Date();
-    targetDate.setDate(targetDate.getDate() + 7);
-    targetDate.setHours(23, 59, 59, 999);
-
-    const timer = setInterval(() => {
-      const now = new Date().getTime();
-      const distance = targetDate.getTime() - now;
-
-      if (distance > 0) {
-        setTimeLeft({
-          days: Math.floor(distance / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-          minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-          seconds: Math.floor((distance % (1000 * 60)) / 1000)
-        });
-      }
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
 
   return (
     <section id="pricing" className="py-20 bg-gradient-to-br from-red-500 via-purple-600 to-pink-600 text-white relative overflow-hidden">
@@ -50,8 +19,8 @@ export default function Urgency() {
             Launch Special: <span className="text-yellow-300">50% OFF</span>
           </h2>
           <p className="text-xl text-red-100 max-w-2xl mx-auto leading-relaxed mb-8">
-            We're celebrating our launch with an exclusive discount for early adopters. 
-            This offer expires soon – don't miss out!
+            We&apos;re celebrating our launch with an exclusive discount for early adopters. 
+            This offer expires soon – don&apos;t miss out!
           </p>
         </div> */}
 

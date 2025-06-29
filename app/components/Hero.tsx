@@ -1,17 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
-
-interface HeroProps {
-  onEmailSubmit: (e: React.FormEvent) => void;
-  email: string;
-  setEmail: (email: string) => void;
-  loading: boolean;
-  status: "idle" | "success" | "error";
-}
-
-export default function Hero({ onEmailSubmit, email, setEmail, loading, status }: HeroProps) {
+export default function Hero() {
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 overflow-hidden">
       {/* Animated background elements */}
