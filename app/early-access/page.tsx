@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { trackFormSubmission, trackButtonClick } from '../components/GoogleAnalytics';
 
 export default function EarlyAccess() {
   const router = useRouter();
@@ -32,8 +33,10 @@ export default function EarlyAccess() {
       }
 
       setIsSubmitted(true);
+      trackFormSubmission('Early Access Signup', true);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+      trackFormSubmission('Early Access Signup', false);
     } finally {
       setIsLoading(false);
     }
@@ -55,7 +58,10 @@ export default function EarlyAccess() {
               We&apos;ll send you an email with your login details once it&apos;s ready.
             </p>
             <button
-              onClick={() => router.push('/')}
+              onClick={() => {
+                trackButtonClick('Back to Home', 'Early Access Success');
+                router.push('/');
+              }}
               className="inline-block px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold text-lg rounded-full hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 cursor-pointer"
             >
               Back to Home
@@ -78,7 +84,10 @@ export default function EarlyAccess() {
       <div className="max-w-md w-full relative z-10">
         <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-8 shadow-2xl">
           <div className="text-center mb-8">
-            <button onClick={() => router.push('/')} className="inline-flex items-center space-x-2 mb-8 cursor-pointer bg-transparent border-none">
+            <button onClick={() => {
+              trackButtonClick('Logo', 'Early Access Form');
+              router.push('/');
+            }} className="inline-flex items-center space-x-2 mb-8 cursor-pointer bg-transparent border-none">
               <div className="w-10 h-10 bg-gradient-to-br from-purple-400 to-pink-400 rounded-lg flex items-center justify-center">
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -138,7 +147,10 @@ export default function EarlyAccess() {
 
           <div className="mt-8 text-center">
             <button
-              onClick={() => router.push('/')}
+              onClick={() => {
+                trackButtonClick('Back to Home', 'Early Access Form');
+                router.push('/');
+              }}
               className="text-purple-300 hover:text-purple-200 transition-colors cursor-pointer bg-transparent border-none"
             >
               ← Back to Home
