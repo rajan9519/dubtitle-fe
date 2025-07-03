@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export default function EarlyAccess() {
@@ -50,10 +49,10 @@ export default function EarlyAccess() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h2 className="text-3xl font-bold text-white mb-4">You're All Set! 🎉</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">You&apos;re All Set! 🎉</h2>
             <p className="text-gray-300 mb-8 text-lg">
               Thank you for your interest in DubTitle! Your account will be activated in a few days. 
-              We'll send you an email with your login details once it's ready.
+              We&apos;ll send you an email with your login details once it&apos;s ready.
             </p>
             <button
               onClick={() => router.push('/')}
