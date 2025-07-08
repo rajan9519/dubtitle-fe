@@ -1,10 +1,71 @@
 "use client";
 
 import { useRouter } from 'next/navigation';
+import { useState, useRef, useEffect } from 'react';
 import { trackButtonClick } from './GoogleAnalytics';
 
 export default function Hero() {
   const router = useRouter();
+  const [selectedLanguage, setSelectedLanguage] = useState<'hindi' | 'english'>('hindi');
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  // Replace these with your actual URLs
+  const videoUrl = "https://res.cloudinary.com/dykgfl3rm/video/upload/v1751943920/Vijay_Mallya_podcast_is_a_MISTAKE__Abhi_and_Niyu-69639809_ma7u8j.mp4"; // You'll provide this
+  const englishAudioUrl = "https://res.cloudinary.com/dykgfl3rm/video/upload/v1751943989/translations_audio_18_combined_audio-08175989_za59ny.wav"; // You'll provide this
+
+  const handleLanguageToggle = (language: 'hindi' | 'english') => {
+    setSelectedLanguage(language);
+    
+    if (language === 'english' && videoRef.current && audioRef.current) {
+      // Get current video time
+      const currentTime = videoRef.current.currentTime;
+      
+      // Mute the video and play the English audio
+      videoRef.current.muted = true;
+      audioRef.current.currentTime = currentTime;
+      
+      if (isPlaying) {
+        audioRef.current.play();
+      }
+    } else if (language === 'hindi' && videoRef.current && audioRef.current) {
+      // Unmute the video and pause the English audio
+      videoRef.current.muted = false;
+      audioRef.current.pause();
+    }
+  };
+
+  const handlePlayPause = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+        if (selectedLanguage === 'english' && audioRef.current) {
+          audioRef.current.pause();
+        }
+      } else {
+        videoRef.current.play();
+        if (selectedLanguage === 'english' && audioRef.current) {
+          audioRef.current.play();
+        }
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  const handleVideoTimeUpdate = () => {
+    // Sync audio with video when playing English
+    if (selectedLanguage === 'english' && videoRef.current && audioRef.current && isPlaying) {
+      const videoTime = videoRef.current.currentTime;
+      const audioTime = audioRef.current.currentTime;
+      
+      // Sync if the difference is more than 0.1 seconds
+      if (Math.abs(videoTime - audioTime) > 0.1) {
+        audioRef.current.currentTime = videoTime;
+      }
+    }
+  };
+
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 overflow-hidden">
       {/* Animated background elements */}
@@ -88,50 +149,77 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right Column - Hero Visual */}
+          {/* Right Column - Demo Video */}
           <div className="relative">
             <div className="relative bg-white/5 backdrop-blur-lg border border-white/10 rounded-3xl p-8 shadow-2xl">
-              {/* Mock video player */}
+              {/* Video player */}
               <div className="aspect-video bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl mb-6 relative overflow-hidden">
+                <video
+                  ref={videoRef}
+                  className="w-full h-full object-cover rounded-2xl"
+                  onTimeUpdate={handleVideoTimeUpdate}
+                  onPlay={() => setIsPlaying(true)}
+                  onPause={() => setIsPlaying(false)}
+                  muted={selectedLanguage === 'english'}
+                >
+                  <source src={videoUrl} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+                
+                {/* Audio element for English dubbing */}
+                <audio
+                  ref={audioRef}
+                  preload="auto"
+                >
+                  <source src={englishAudioUrl} type="audio/mpeg" />
+                  Your browser does not support the audio tag.
+                </audio>
+
+                {/* Play/Pause button */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/30">
-                    <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z"/>
-                    </svg>
-                  </div>
+                  <button
+                    onClick={handlePlayPause}
+                    className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/30 hover:bg-white/30 transition-all duration-300"
+                  >
+                    {isPlaying ? (
+                      <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                      </svg>
+                    ) : (
+                      <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
+                    )}
+                  </button>
                 </div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <div className="bg-black/50 backdrop-blur-sm rounded-lg p-3">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-white text-sm">🇺🇸 English → 🇪🇸 Spanish</span>
-                      <span className="text-green-400 text-sm">✅ Ready</span>
-                    </div>
-                    <div className="w-full bg-gray-700 rounded-full h-1">
-                      <div className="bg-purple-500 h-1 rounded-full w-full"></div>
-                    </div>
-                  </div>
-                </div>
+
               </div>
 
-              {/* Process indicators */}
-              <div className="grid grid-cols-3 gap-4">
-                <div className="text-center">
-                  <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                    <span className="text-green-400">✓</span>
-                  </div>
-                  <div className="text-white text-sm font-medium">Upload</div>
-                </div>
-                <div className="text-center">
-                  <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                    <span className="text-green-400">✓</span>
-                  </div>
-                  <div className="text-white text-sm font-medium">Process</div>
-                </div>
-                <div className="text-center">
-                  <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                    <span className="text-green-400">✓</span>
-                  </div>
-                  <div className="text-white text-sm font-medium">Download</div>
+              {/* Language Selection */}
+              <div className="text-center">
+                
+                {/* Language toggle buttons */}
+                <div className="flex justify-center space-x-4">
+                  <button
+                    onClick={() => handleLanguageToggle('hindi')}
+                    className={`px-6 py-3 rounded-full text-sm font-medium transition-all ${
+                      selectedLanguage === 'hindi'
+                        ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/25'
+                        : 'bg-white/20 text-gray-300 hover:bg-white/30'
+                    }`}
+                  >
+                    🇮🇳 Hindi
+                  </button>
+                  <button
+                    onClick={() => handleLanguageToggle('english')}
+                    className={`px-6 py-3 rounded-full text-sm font-medium transition-all ${
+                      selectedLanguage === 'english'
+                        ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/25'
+                        : 'bg-white/20 text-gray-300 hover:bg-white/30'
+                    }`}
+                  >
+                    🇺🇸 English
+                  </button>
                 </div>
               </div>
             </div>
