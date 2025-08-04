@@ -13,6 +13,8 @@ interface FileUploadProps {
   onUploadError?: (error: string) => void;
 }
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://dubtitle.com/api';
+
 export default function FileUpload({ onUploadComplete, onUploadError }: FileUploadProps) {
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -86,7 +88,7 @@ export default function FileUpload({ onUploadComplete, onUploadError }: FileUplo
   };
 
   const requestPresignedUrl = async (file: File): Promise<UploadResponse> => {
-    const response = await fetch("https://api.subgen.in/upload/presigned-url", {
+    const response = await fetch(`${API_BASE_URL}/upload/presigned-url`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -149,7 +151,7 @@ export default function FileUpload({ onUploadComplete, onUploadError }: FileUplo
   };
 
   const notifyUploadComplete = async (resourceId: string) => {
-    const response = await fetch("https://api.subgen.in/upload/complete", {
+    const response = await fetch(`${API_BASE_URL}/upload/complete`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

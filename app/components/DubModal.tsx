@@ -139,7 +139,7 @@ export const targetLanguageMap: { [key: string]: string } = {
     rus: 'Russian'
 };
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://api.subgen.in';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://dubtitle.com/api';
 
 
 interface DubModalProps {
@@ -149,8 +149,8 @@ interface DubModalProps {
 
 export default function DubModal({ isOpen, onClose }: DubModalProps) {
   const [projectName, setProjectName] = useState('Untitled project');
-  const [sourceLanguage, setSourceLanguage] = useState('Detect');
-  const [targetLanguage, setTargetLanguage] = useState('Select language');
+  const [sourceLanguage, setSourceLanguage] = useState('Select source language');
+  const [targetLanguage, setTargetLanguage] = useState('Select target language');
   const [activeTab, setActiveTab] = useState<'upload' | 'youtube'>('upload');
 //   const [createDubbingProject, setCreateDubbingProject] = useState(false);
   const [numberOfSpeakers, setNumberOfSpeakers] = useState('Detect');
@@ -165,9 +165,9 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
   
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Generate languages array with 'Detect' first, then sorted language names
-  const sourceLanguages = ['Detect', ...Object.values(languageMap).sort()];
-  const targetLanguages = ['Select language', ...Object.values(targetLanguageMap).sort()];
+  // Generate languages array with placeholder first, then sorted language names
+  const sourceLanguages = ['Select source language', ...Object.values(languageMap).sort()];
+  const targetLanguages = ['Select target language', ...Object.values(targetLanguageMap).sort()];
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
@@ -323,6 +323,17 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate that both source and target languages are selected
+    if (sourceLanguage === 'Select source language') {
+      alert('Please select a source language.');
+      return;
+    }
+    
+    if (targetLanguage === 'Select target language') {
+      alert('Please select a target language.');
+      return;
+    }
     
     // For upload tab, we need a resourceId (file should already be uploaded)
     if (activeTab === 'upload' && !resourceId) {
@@ -656,7 +667,7 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
           {/* Submit Button */}
           <button
             type="submit"
-            disabled={uploading || (!resourceId && activeTab === 'upload') || (!youtubeUrl && activeTab === 'youtube') || targetLanguage === 'Select language'}
+            disabled={uploading || (!resourceId && activeTab === 'upload') || (!youtubeUrl && activeTab === 'youtube') || sourceLanguage === 'Select source language' || targetLanguage === 'Select target language'}
             className="w-full py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-xl hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {uploading ? `Uploading... ${uploadProgress}%` : 'Create dub'}

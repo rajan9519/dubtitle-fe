@@ -2,9 +2,26 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import DubModal from '../components/DubModal';
 
 interface User {
   email: string;
+}
+
+interface DubbingTask {
+  id: string;
+  user_id: string;
+  resource_id: string;
+  status: 'queued' | 'processing' | 'completed' | 'failed';
+  progress: number;
+  transcript_id: number;
+  source_language: string;
+  target_language: string;
+  provider: string;
+  output_video_path: string | null;
+  output_audio_path: string | null;
+  created_at: string;
+  updated_at: string;
 }
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://dubtitle.com/api';
@@ -13,6 +30,10 @@ export default function Dashboard() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [tasks, setTasks] = useState<DubbingTask[]>([]);
+  const [tasksLoading, setTasksLoading] = useState(true);
+  const [tasksError, setTasksError] = useState<string | null>(null);
+  const [showDubModal, setShowDubModal] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -46,6 +67,39 @@ export default function Dashboard() {
     fetchUser();
   }, [router]);
 
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/dubbing-tasks`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const responseJson = await response.json();
+        setTasks(responseJson.body?.tasks || []);
+        setTasksError(null);
+      } catch (error) {
+        console.error('Failed to fetch dubbing tasks:', error);
+        setTasksError(error instanceof Error ? error.message : 'Failed to fetch dubbing tasks');
+        setTasks([]);
+      } finally {
+        setTasksLoading(false);
+      }
+    };
+
+    // Only fetch tasks if user is loaded
+    if (user) {
+      fetchTasks();
+    }
+  }, [user]);
+
   const handleSignOut = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/logout`, {
@@ -66,6 +120,80 @@ export default function Dashboard() {
       console.error('Failed to sign out:', error);
       // Still redirect to login even if logout fails
       router.push('/');
+    }
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'completed':
+        return (
+          <div className="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center">
+            <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+        );
+      case 'failed':
+        return (
+          <div className="w-8 h-8 bg-red-500/20 rounded-full flex items-center justify-center">
+            <svg className="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </div>
+        );
+      case 'processing':
+        return (
+          <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center">
+            <svg className="w-5 h-5 text-blue-400 animate-spin" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          </div>
+        );
+      default: // queued
+        return (
+          <div className="w-8 h-8 bg-yellow-500/20 rounded-full flex items-center justify-center">
+            <svg className="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+        );
+    }
+  };
+
+  const getStatusText = (status: string) => {
+    switch (status) {
+      case 'completed':
+        return 'Completed';
+      case 'failed':
+        return 'Failed';
+      case 'processing':
+        return 'Processing';
+      default:
+        return 'Queued';
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'completed':
+        return 'text-green-400';
+      case 'failed':
+        return 'text-red-400';
+      case 'processing':
+        return 'text-blue-400';
+      default:
+        return 'text-yellow-400';
     }
   };
 
@@ -120,68 +248,123 @@ export default function Dashboard() {
 
       {/* Main Content */}
       <div className="container mx-auto px-6 py-12">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h1 className="text-4xl font-bold text-white mb-2">My Dubbing Projects</h1>
+              <p className="text-gray-300">Manage and track your dubbing tasks</p>
+            </div>
+            <button
+              onClick={() => setShowDubModal(true)}
+              className="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-xl hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 flex items-center space-x-2"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              <span>New Project</span>
+            </button>
+          </div>
+
+          {/* Tasks Content */}
           <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-8 shadow-2xl">
-            <h1 className="text-4xl font-bold text-white mb-8">
-              Welcome to DubTitle Dashboard
-            </h1>
-            
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Upload New Project */}
-              <div className="bg-white/10 border border-white/20 rounded-xl p-6 hover:bg-white/20 transition-colors cursor-pointer">
-                <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-400 rounded-lg flex items-center justify-center mb-4">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            {tasksLoading ? (
+              <div className="flex items-center justify-center py-12">
+                <div className="flex items-center space-x-3">
+                  <svg className="w-6 h-6 text-purple-400 animate-spin" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">Upload Video</h3>
-                <p className="text-gray-300">Start a new dubbing project by uploading your video</p>
-              </div>
-
-              {/* My Projects */}
-              <div className="bg-white/10 border border-white/20 rounded-xl p-6 hover:bg-white/20 transition-colors cursor-pointer">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-lg flex items-center justify-center mb-4">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">My Projects</h3>
-                <p className="text-gray-300">View and manage your dubbing projects</p>
-              </div>
-
-              {/* Settings */}
-              <div className="bg-white/10 border border-white/20 rounded-xl p-6 hover:bg-white/20 transition-colors cursor-pointer">
-                <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-teal-400 rounded-lg flex items-center justify-center mb-4">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">Settings</h3>
-                <p className="text-gray-300">Manage your account and preferences</p>
-              </div>
-            </div>
-
-            {/* Coming Soon Notice */}
-            <div className="mt-8 bg-yellow-500/20 border border-yellow-500/30 rounded-xl p-6">
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-yellow-500/30 rounded-full flex items-center justify-center">
-                  <svg className="w-5 h-5 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-yellow-300">Coming Soon!</h3>
-                  <p className="text-yellow-200">
-                    The full dubbing functionality is currently in development. 
-                    You&apos;ll be notified when it&apos;s ready to use.
-                  </p>
+                  <span className="text-white text-lg">Loading dubbing tasks...</span>
                 </div>
               </div>
-            </div>
+            ) : tasksError || tasks.length === 0 ? (
+              // Empty state or error
+              <div className="text-center py-12">
+                <div className="w-24 h-24 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <svg className="w-12 h-12 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <h2 className="text-2xl font-bold text-white mb-4">
+                  {tasksError ? 'Failed to load dubbing tasks' : 'No dubbing tasks yet'}
+                </h2>
+                <p className="text-gray-300 mb-8 max-w-md mx-auto">
+                  {tasksError 
+                    ? 'There was an error loading your dubbing tasks. Please try again.'
+                    : 'Start your dubbing journey by creating your first project. Upload a video or paste a YouTube URL to get started.'
+                  }
+                </p>
+                <button
+                  onClick={() => setShowDubModal(true)}
+                  className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-xl hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 inline-flex items-center space-x-2"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                  </svg>
+                  <span>Create Your First Project</span>
+                </button>
+              </div>
+            ) : (
+              // Tasks list
+              <div className="space-y-4">
+                {tasks.map((task) => (
+                  <div key={task.id} className="bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-colors">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-4 flex-1">
+                        {getStatusIcon(task.status)}
+                        <div className="flex-1">
+                          <div className="flex items-center space-x-2 mb-1">
+                            <h3 className="text-lg font-semibold text-white">Dubbing Task #{task.id.slice(-8)}</h3>
+                            <span className="text-xs px-2 py-1 bg-gray-700 text-gray-300 rounded-full">
+                              {task.provider}
+                            </span>
+                          </div>
+                          <div className="flex items-center space-x-4 text-sm text-gray-300">
+                            <span>{task.source_language} → {task.target_language}</span>
+                            <span>•</span>
+                            <span>{formatDate(task.created_at)}</span>
+                          </div>
+                          <div className="mt-2 text-xs text-gray-400">
+                            Resource ID: {task.resource_id.slice(-12)}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className={`text-sm font-medium ${getStatusColor(task.status)} mb-1`}>
+                          {getStatusText(task.status)}
+                        </div>
+                        {task.status === 'processing' && (
+                          <div className="flex items-center space-x-2">
+                            <div className="w-20 bg-gray-700 rounded-full h-2">
+                              <div 
+                                className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
+                                style={{ width: `${task.progress}%` }}
+                              ></div>
+                            </div>
+                            <span className="text-xs text-gray-400">{task.progress}%</span>
+                          </div>
+                        )}
+                        {task.status === 'completed' && (task.output_video_path || task.output_audio_path) && (
+                          <button className="px-3 py-1 bg-purple-600 text-white text-xs rounded-lg hover:bg-purple-700 transition-colors">
+                            Download
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
+
+      {/* Dub Modal */}
+      <DubModal
+        isOpen={showDubModal}
+        onClose={() => setShowDubModal(false)}
+      />
     </div>
   );
 } 
