@@ -7,7 +7,7 @@ interface User {
   email: string;
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://api.subgen.in';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://dubtitle.com/api';
 
 export default function Dashboard() {
   const [user, setUser] = useState<User | null>(null);
@@ -18,7 +18,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/user`, {
+        const response = await fetch(`${API_BASE_URL}/user`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
