@@ -3,13 +3,11 @@
 import { useRouter } from 'next/navigation';
 import { useState, useRef } from 'react';
 import { trackButtonClick } from './GoogleAnalytics';
-import DubModal from './DubModal';
 
 export default function Hero() {
   const router = useRouter();
   const [selectedLanguage, setSelectedLanguage] = useState<'hindi' | 'english'>('hindi');
   const [isPlaying, setIsPlaying] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -180,7 +178,7 @@ export default function Hero() {
               <button 
                 onClick={() => {
                   trackButtonClick('Get Started for Free', 'Hero Section');
-                  setModalOpen(true);
+                  router.push('/login');
                 }}
                 className="group relative px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold text-lg rounded-full hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
               >
@@ -276,12 +274,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-      
-      {/* Dub Modal */}
-      <DubModal 
-        isOpen={modalOpen} 
-        onClose={() => setModalOpen(false)} 
-      />
     </section>
   );
 } 
