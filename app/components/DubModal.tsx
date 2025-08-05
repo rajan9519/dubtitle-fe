@@ -537,20 +537,8 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
               </button>
               <button
                 type="button"
-                onClick={() => {
-                  setActiveTab('youtube');
-                  setFile(null);
-                  setResourceId(null);
-                  setUploadProgress(0);
-                  if (fileInputRef.current) {
-                    fileInputRef.current.value = '';
-                  }
-                }}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                  activeTab === 'youtube'
-                    ? 'bg-purple-600 text-white'
-                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                }`}
+                disabled={true}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors opacity-50 cursor-not-allowed bg-gray-700 text-gray-300`}
               >
                 YouTube
               </button>

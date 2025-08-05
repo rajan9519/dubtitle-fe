@@ -20,6 +20,7 @@ interface DubbingTask {
   provider: string;
   output_video_path: string | null;
   output_audio_path: string | null;
+  output_video_url: string | null;
   project_title: string;
   created_at: string;
   updated_at: string;
@@ -198,6 +199,29 @@ export default function Dashboard() {
     }
   };
 
+  const handleDownloadVideo = async (task: DubbingTask) => {
+    if (!task.output_video_url) {
+      console.error('No output video URL available');
+      return;
+    }
+
+    try {
+      // Create a temporary anchor element to trigger download
+      const link = document.createElement('a');
+      link.href = task.output_video_url;
+      link.download = `${task.project_title || 'dubbed-video'}.mp4`;
+      link.target = '_blank';
+      
+      // Append to body, click, and remove
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('Failed to download video:', error);
+      // Optionally show an error message to the user
+    }
+  };
+
   // Show loading state while fetching user
   if (loading) {
     return (
@@ -310,39 +334,55 @@ export default function Dashboard() {
               // Tasks list
               <div className="space-y-4">
                 {tasks.map((task) => (
-                  <div key={task.id} className="bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-colors">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-4 flex-1">
+                  <div key={task.id} className="bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all duration-300 hover:border-white/20">
+                    <div className="flex items-start justify-between gap-6">
+                      <div className="flex items-center space-x-4 flex-1 min-w-0">
                         {getStatusIcon(task.status)}
-                        <div className="flex-1">
-                          <div className="flex items-center space-x-2 mb-1">
-                            <h3 className="text-lg font-semibold text-white">{task.project_title || 'Untitled Project'}</h3>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center space-x-2 mb-2">
+                            <h3 className="text-xl font-semibold text-white truncate">{task.project_title || 'Untitled Project'}</h3>
                           </div>
-                          <div className="flex items-center space-x-4 text-sm text-gray-300">
-                            <span>{task.source_language} → {task.target_language}</span>
+                          <div className="flex items-center space-x-4 text-sm text-gray-300 mb-2">
+                            <span className="flex items-center space-x-1">
+                              <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                              </svg>
+                              <span>{task.source_language} → {task.target_language}</span>
+                            </span>
                             <span>•</span>
-                            <span>{formatDate(task.created_at)}</span>
+                            <span className="flex items-center space-x-1">
+                              <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                              <span>{formatDate(task.created_at)}</span>
+                            </span>
                           </div>
                         </div>
                       </div>
-                      <div className="text-right">
-                        <div className={`text-sm font-medium ${getStatusColor(task.status)} mb-1`}>
-                          {getStatusText(task.status)}
+                      <div className="flex flex-col items-end space-y-3 flex-shrink-0">
+                        <div className={`text-sm font-medium ${getStatusColor(task.status)} flex items-center space-x-2`}>
+                          <span>{getStatusText(task.status)}</span>
                         </div>
                         {task.status === 'processing' && (
-                          <div className="flex items-center space-x-2">
-                            <div className="w-20 bg-gray-700 rounded-full h-2">
+                          <div className="flex items-center space-x-3">
+                            <div className="w-24 bg-gray-700 rounded-full h-2">
                               <div 
                                 className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
                                 style={{ width: `${task.progress}%` }}
                               ></div>
                             </div>
-                            <span className="text-xs text-gray-400">{task.progress}%</span>
+                            <span className="text-xs text-gray-400 min-w-[3rem] text-right">{task.progress}%</span>
                           </div>
                         )}
-                        {task.status === 'completed' && (task.output_video_path || task.output_audio_path) && (
-                          <button className="px-3 py-1 bg-purple-600 text-white text-xs rounded-lg hover:bg-purple-700 transition-colors">
-                            Download
+                        {task.status === 'completed' && task.output_video_url && (
+                          <button 
+                            onClick={() => handleDownloadVideo(task)}
+                            className="px-6 py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-sm font-semibold rounded-lg hover:from-green-600 hover:to-emerald-600 hover:shadow-lg hover:shadow-green-500/25 transition-all duration-300 cursor-pointer flex items-center space-x-2"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            <span>Download Video</span>
                           </button>
                         )}
                       </div>
