@@ -1,6 +1,9 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 export default function Urgency() {
+  const router = useRouter();
 
   return (
     <section id="pricing" className="py-20 bg-gradient-to-br from-red-500 via-purple-600 to-pink-600 text-white relative overflow-hidden">
@@ -82,7 +85,10 @@ export default function Urgency() {
                 <span>Includes watermark</span>
               </li>
             </ul>
-            <button className="w-full py-4 bg-white text-purple-600 font-bold rounded-xl hover:bg-gray-100 transition-all duration-300 mt-auto cursor-pointer">
+            <button 
+              onClick={() => router.push('/login')}
+              className="w-full py-4 bg-white text-purple-600 font-bold rounded-xl hover:bg-gray-100 transition-all duration-300 mt-auto cursor-pointer"
+            >
               Get Started Free
             </button>
           </div>

@@ -8,6 +8,8 @@ export default function Hero() {
   const router = useRouter();
   const [selectedLanguage, setSelectedLanguage] = useState<'hindi' | 'english'>('hindi');
   const [isPlaying, setIsPlaying] = useState(false);
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [signupLoading, setSignupLoading] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -91,21 +93,47 @@ export default function Hero() {
           <a href="#about" className="text-white hover:text-purple-300 transition-colors">About</a>
           <button
             onClick={() => {
+              if (loginLoading) return;
+              setLoginLoading(true);
               trackButtonClick('Login', 'Hero Navigation');
               router.push('/login');
             }}
-            className="text-white hover:text-purple-300 transition-colors"
+            disabled={loginLoading}
+            className="text-white hover:text-purple-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
           >
-            Login
+            {loginLoading ? (
+              <>
+                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span>Logging in...</span>
+              </>
+            ) : (
+              'Login'
+            )}
           </button>
           <button
             onClick={() => {
+              if (signupLoading) return;
+              setSignupLoading(true);
               trackButtonClick('Sign Up', 'Hero Navigation');
               router.push('/signup');
             }}
-            className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-medium rounded-lg hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105"
+            disabled={signupLoading}
+            className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-medium rounded-lg hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center space-x-2"
           >
-            Sign Up
+            {signupLoading ? (
+              <>
+                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span>Signing up...</span>
+              </>
+            ) : (
+              'Sign Up'
+            )}
           </button>
         </div>
         
@@ -113,21 +141,47 @@ export default function Hero() {
         <div className="md:hidden flex items-center space-x-4">
           <button
             onClick={() => {
+              if (loginLoading) return;
+              setLoginLoading(true);
               trackButtonClick('Login', 'Hero Navigation Mobile');
               router.push('/login');
             }}
-            className="text-white hover:text-purple-300 transition-colors"
+            disabled={loginLoading}
+            className="text-white hover:text-purple-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
           >
-            Login
+            {loginLoading ? (
+              <>
+                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span>Logging in...</span>
+              </>
+            ) : (
+              'Login'
+            )}
           </button>
           <button
             onClick={() => {
+              if (signupLoading) return;
+              setSignupLoading(true);
               trackButtonClick('Sign Up', 'Hero Navigation Mobile');
               router.push('/signup');
             }}
-            className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-medium rounded-lg hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105"
+            disabled={signupLoading}
+            className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-medium rounded-lg hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center space-x-2"
           >
-            Sign Up
+            {signupLoading ? (
+              <>
+                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span>Signing up...</span>
+              </>
+            ) : (
+              'Sign Up'
+            )}
           </button>
         </div>
       </nav>
@@ -177,12 +231,25 @@ export default function Hero() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
               <button 
                 onClick={() => {
+                  if (loginLoading) return;
+                  setLoginLoading(true);
                   trackButtonClick('Get Started for Free', 'Hero Section');
                   router.push('/login');
                 }}
-                className="group relative px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold text-lg rounded-full hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
+                disabled={loginLoading}
+                className="group relative px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold text-lg rounded-full hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center space-x-2"
               >
-                <span className="relative z-10">Get Started for Free</span>
+                {loginLoading ? (
+                  <>
+                    <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span className="relative z-10">Getting Started...</span>
+                  </>
+                ) : (
+                  <span className="relative z-10">Get Started for Free</span>
+                )}
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </button>
               
