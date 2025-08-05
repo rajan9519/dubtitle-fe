@@ -20,6 +20,7 @@ interface DubbingTask {
   provider: string;
   output_video_path: string | null;
   output_audio_path: string | null;
+  project_title: string;
   created_at: string;
   updated_at: string;
 }
@@ -315,18 +316,12 @@ export default function Dashboard() {
                         {getStatusIcon(task.status)}
                         <div className="flex-1">
                           <div className="flex items-center space-x-2 mb-1">
-                            <h3 className="text-lg font-semibold text-white">Dubbing Task #{task.id.slice(-8)}</h3>
-                            <span className="text-xs px-2 py-1 bg-gray-700 text-gray-300 rounded-full">
-                              {task.provider}
-                            </span>
+                            <h3 className="text-lg font-semibold text-white">{task.project_title || 'Untitled Project'}</h3>
                           </div>
                           <div className="flex items-center space-x-4 text-sm text-gray-300">
                             <span>{task.source_language} → {task.target_language}</span>
                             <span>•</span>
                             <span>{formatDate(task.created_at)}</span>
-                          </div>
-                          <div className="mt-2 text-xs text-gray-400">
-                            Resource ID: {task.resource_id.slice(-12)}
                           </div>
                         </div>
                       </div>

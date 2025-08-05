@@ -321,6 +321,11 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
     }
   };
 
+  // Helper function to get language code from display name
+  const getLanguageCode = (displayName: string, languageMap: { [key: string]: string }) => {
+    return Object.keys(languageMap).find(code => languageMap[code] === displayName) || '';
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -341,6 +346,16 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
       return;
     }
     
+    // For YouTube tab, we need a URL
+    if (activeTab === 'youtube' && !youtubeUrl) {
+      alert('Please enter a YouTube URL.');
+      return;
+    }
+
+    // Convert display names back to language codes
+    const sourceLanguageCode = getLanguageCode(sourceLanguage, languageMap);
+    const targetLanguageCode = getLanguageCode(targetLanguage, targetLanguageMap);
+    
     const formData = {
       projectName,
       sourceLanguage,
@@ -354,9 +369,46 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
     console.log('Form submitted:', formData);
     trackButtonClick('Create Dub', 'Dub Modal');
     
-    // Here you would typically call your backend API with the resourceId
-    // For now, we'll just close the modal
-    onClose();
+    try {
+      // Prepare payload for /api/translate
+      const translatePayload = {
+        resource_id: activeTab === 'upload' ? resourceId : null,
+        source_language: sourceLanguageCode,
+        target_language: targetLanguageCode,
+        project_title: projectName,
+        // Include additional fields for YouTube URL if needed
+        ...(activeTab === 'youtube' && { youtube_url: youtubeUrl }),
+        ...(numberOfSpeakers !== 'Detect' && { number_of_speakers: parseInt(numberOfSpeakers) })
+      };
+
+      console.log('Calling /api/translate with payload:', translatePayload);
+      
+      // Call the translate API
+      const response = await fetch('/api/translate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(translatePayload),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log('Translation API response:', result);
+      
+      // Show success message
+      alert('Translation request submitted successfully!');
+      
+      // Close the modal on success
+      onClose();
+    } catch (error) {
+      console.error('Error calling translate API:', error);
+      alert(`Failed to submit translation request: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
   };
 
   const formatFileSize = (bytes: number) => {
