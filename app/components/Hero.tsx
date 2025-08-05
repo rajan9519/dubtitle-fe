@@ -85,10 +85,50 @@ export default function Hero() {
           </div>
           <span className="text-white text-2xl font-bold">DubTitle</span>
         </div>
-        <div className="hidden md:flex space-x-8">
+        <div className="hidden md:flex items-center space-x-8">
           <a href="#features" className="text-white hover:text-purple-300 transition-colors">Features</a>
           <a href="#pricing" className="text-white hover:text-purple-300 transition-colors">Pricing</a>
           <a href="#about" className="text-white hover:text-purple-300 transition-colors">About</a>
+          <button
+            onClick={() => {
+              trackButtonClick('Login', 'Hero Navigation');
+              router.push('/login');
+            }}
+            className="text-white hover:text-purple-300 transition-colors"
+          >
+            Login
+          </button>
+          <button
+            onClick={() => {
+              trackButtonClick('Sign Up', 'Hero Navigation');
+              router.push('/signup');
+            }}
+            className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-medium rounded-lg hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105"
+          >
+            Sign Up
+          </button>
+        </div>
+        
+        {/* Mobile Menu */}
+        <div className="md:hidden flex items-center space-x-4">
+          <button
+            onClick={() => {
+              trackButtonClick('Login', 'Hero Navigation Mobile');
+              router.push('/login');
+            }}
+            className="text-white hover:text-purple-300 transition-colors"
+          >
+            Login
+          </button>
+          <button
+            onClick={() => {
+              trackButtonClick('Sign Up', 'Hero Navigation Mobile');
+              router.push('/signup');
+            }}
+            className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-medium rounded-lg hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105"
+          >
+            Sign Up
+          </button>
         </div>
       </nav>
 
@@ -138,7 +178,7 @@ export default function Hero() {
               <button 
                 onClick={() => {
                   trackButtonClick('Get Started for Free', 'Hero Section');
-                  router.push('/early-access');
+                  router.push('/login');
                 }}
                 className="group relative px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold text-lg rounded-full hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
               >

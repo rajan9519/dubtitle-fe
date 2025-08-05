@@ -3,7 +3,6 @@ export default function SocialProof() {
     {
       name: "Sarah Chen",
       role: "YouTube Creator",
-      subscribers: "2.3M subscribers",
       avatar: "👩🏻‍💼",
       rating: 5,
       text: "DubTitle transformed my channel! I went from English-only to 5 languages in a week. My Spanish audience alone doubled my revenue.",
@@ -14,7 +13,7 @@ export default function SocialProof() {
       role: "Online Course Creator",
       subscribers: "Educational Content",
       avatar: "👨🏽‍🏫",
-      rating: 5,
+      rating: 4,
       text: "I was spending $300+ per course translation. Now I do it for $9 and get better quality. My courses are available in 12 languages!",
       metrics: "12 languages"
     },
@@ -23,7 +22,7 @@ export default function SocialProof() {
       role: "Brand Marketer",
       subscribers: "Fortune 500 Company",
       avatar: "👩🏼‍💼",
-      rating: 5,
+      rating: 4,
       text: "Game changer for our global campaigns. We can test messaging in multiple markets instantly instead of waiting months for translations.",
       metrics: "3x faster campaigns"
     },

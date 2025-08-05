@@ -14,12 +14,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dubtitle - AI-Powered Video Dubbing Coming Soon",
+  title: "Dubtitle - AI-Powered Video Dubbing Companion",
   description: "Transform your videos with automatic AI dubbing. Upload your video, select a target language, and get a professionally dubbed version instantly.",
   keywords: ["video dubbing", "AI dubbing", "video translation", "automatic dubbing", "dubtitle"],
   authors: [{ name: "Dubtitle Team" }],
   openGraph: {
-    title: "Dubtitle - AI-Powered Video Dubbing Coming Soon",
+    title: "Dubtitle - AI-Powered Video Dubbing Companion",
     description: "Transform your videos with automatic AI dubbing. Upload your video, select a target language, and get a professionally dubbed version instantly.",
     url: "https://dubtitle.com",
     siteName: "Dubtitle",
@@ -28,8 +28,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dubtitle - AI-Powered Video Dubbing Coming Soon",
-    description: "Transform your videos with automatic AI dubbing. Coming soon!",
+    title: "Dubtitle - AI-Powered Video Dubbing Companion",
+    description: "Transform your videos with automatic AI dubbing. Upload your video, select a target language, and get a professionally dubbed version instantly.",
   },
 };
 
