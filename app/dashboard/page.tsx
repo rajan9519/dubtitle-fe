@@ -69,37 +69,51 @@ export default function Dashboard() {
     fetchUser();
   }, [router]);
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const response = await fetch(`${API_BASE_URL}/dubbing-tasks`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-        });
+  const fetchTasks = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/dubbing-tasks`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      });
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const responseJson = await response.json();
-        setTasks(responseJson.body?.tasks || []);
-        setTasksError(null);
-      } catch (error) {
-        console.error('Failed to fetch dubbing tasks:', error);
-        setTasksError(error instanceof Error ? error.message : 'Failed to fetch dubbing tasks');
-        setTasks([]);
-      } finally {
-        setTasksLoading(false);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    };
 
+      const responseJson = await response.json();
+      setTasks(responseJson.body?.tasks || []);
+      setTasksError(null);
+    } catch (error) {
+      console.error('Failed to fetch dubbing tasks:', error);
+      setTasksError(error instanceof Error ? error.message : 'Failed to fetch dubbing tasks');
+      setTasks([]);
+    } finally {
+      setTasksLoading(false);
+    }
+  };
+
+  useEffect(() => {
     // Only fetch tasks if user is loaded
     if (user) {
       fetchTasks();
     }
+  }, [user]);
+
+  // Set up periodic updates every 5 seconds
+  useEffect(() => {
+    if (!user) return;
+
+    const interval = setInterval(() => {
+      fetchTasks();
+    }, 5000); // 5 seconds
+
+    // Cleanup interval on component unmount
+    return () => {
+      clearInterval(interval);
+    };
   }, [user]);
 
   const handleSignOut = async () => {
