@@ -162,8 +162,23 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [resourceId, setResourceId] = useState<string | null>(null);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertType, setAlertType] = useState<'success' | 'error'>('success');
+  const [alertMessage, setAlertMessage] = useState('');
   
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Helper function to show alert
+  const showAlertMessage = (type: 'success' | 'error', message: string) => {
+    setAlertType(type);
+    setAlertMessage(message);
+    setShowAlert(true);
+    
+    // Auto-hide alert after 5 seconds
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 5000);
+  };
 
   // Generate languages array with placeholder first, then sorted language names
   const sourceLanguages = ['Select source language', ...Object.values(languageMap).sort()];
@@ -384,12 +399,13 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
       console.log('Calling /api/translate with payload:', translatePayload);
       
       // Call the translate API
-      const response = await fetch('/api/translate', {
+      const response = await fetch(`${API_BASE_URL}/translate`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(translatePayload),
+        credentials: 'include',
       });
 
       if (!response.ok) {
@@ -400,14 +416,19 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
       const result = await response.json();
       console.log('Translation API response:', result);
       
-      // Show success message
-      alert('Translation request submitted successfully!');
-      
-      // Close the modal on success
+      // Close the modal first
       onClose();
+      
+      // Show success message
+      showAlertMessage('success', 'Translation request submitted successfully!');
+      
+      // Refresh the page after a short delay to allow alert to show
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (error) {
       console.error('Error calling translate API:', error);
-      alert(`Failed to submit translation request: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      showAlertMessage('error', `Failed to submit translation request: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   };
 
@@ -422,8 +443,9 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-      <div className="bg-gray-900 rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <>
+      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+        <div className="bg-gray-900 rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center space-x-3">
@@ -730,7 +752,40 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
             Credits remaining before this dub: 25,484
           </div> */}
         </form>
+        </div>
       </div>
-    </div>
+
+      {/* Alert Component */}
+      {showAlert && (
+        <div className="fixed top-4 right-4 z-[60] animate-in slide-in-from-top-2 duration-300">
+          <div className={`px-6 py-4 rounded-xl shadow-lg border-l-4 max-w-sm ${
+            alertType === 'success' 
+              ? 'bg-green-900/90 border-green-400 text-green-100' 
+              : 'bg-red-900/90 border-red-400 text-red-100'
+          } backdrop-blur-lg`}>
+            <div className="flex items-center space-x-3">
+              {alertType === 'success' ? (
+                <svg className="w-5 h-5 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              ) : (
+                <svg className="w-5 h-5 text-red-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              )}
+              <p className="text-sm font-medium">{alertMessage}</p>
+              <button
+                onClick={() => setShowAlert(false)}
+                className="text-gray-300 hover:text-white ml-auto"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 } 
