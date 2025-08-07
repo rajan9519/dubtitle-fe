@@ -97,6 +97,7 @@ export default function FileUpload({ onUploadComplete, onUploadError }: FileUplo
         fileName: file.name,
         fileType: file.type,
         fileSize: file.size,
+        origin: "dubtitle",
       }),
     });
 
