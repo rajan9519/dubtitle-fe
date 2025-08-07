@@ -153,7 +153,7 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
   const [targetLanguage, setTargetLanguage] = useState('Select target language');
   const [activeTab, setActiveTab] = useState<'upload' | 'youtube'>('upload');
 //   const [createDubbingProject, setCreateDubbingProject] = useState(false);
-  const [numberOfSpeakers, setNumberOfSpeakers] = useState('Detect');
+  // const [numberOfSpeakers, setNumberOfSpeakers] = useState('Detect');
 //   const [startTime, setStartTime] = useState('');
 //   const [endTime, setEndTime] = useState('');
   const [file, setFile] = useState<File | null>(null);
@@ -375,17 +375,6 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
     const sourceLanguageCode = getLanguageCode(sourceLanguage, languageMap);
     const targetLanguageCode = getLanguageCode(targetLanguage, targetLanguageMap);
     
-    const formData = {
-      projectName,
-      sourceLanguage,
-      targetLanguage,
-      sourceType: activeTab,
-      resourceId: activeTab === 'upload' ? resourceId : null,
-      youtubeUrl: activeTab === 'youtube' ? youtubeUrl : null,
-      numberOfSpeakers,
-    };
-
-    console.log('Form submitted:', formData);
     trackButtonClick('Create Dub', 'Dub Modal');
     
     setSubmitting(true);
@@ -399,7 +388,7 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
         project_title: projectName,
         // Include additional fields for YouTube URL if needed
         ...(activeTab === 'youtube' && { youtube_url: youtubeUrl }),
-        ...(numberOfSpeakers !== 'Detect' && { number_of_speakers: parseInt(numberOfSpeakers) })
+        // ...(numberOfSpeakers !== 'Detect' && { number_of_speakers: parseInt(numberOfSpeakers) })
       };
 
       console.log('Calling /api/translate with payload:', translatePayload);
@@ -697,7 +686,7 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
           {/* <p className="text-sm text-gray-400">This will make your dub adjustable in our editor.</p> */}
 
           {/* Number of Speakers */}
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium text-gray-300 mb-2">
               Number of speakers
             </label>
@@ -717,7 +706,7 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
               <option value="8">8</option>
               <option value="9">9</option>
             </select>
-          </div>
+          </div> */}
 
           {/* Time Range */}
           {/* <div>
