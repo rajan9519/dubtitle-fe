@@ -148,7 +148,7 @@ interface DubModalProps {
 }
 
 export default function DubModal({ isOpen, onClose }: DubModalProps) {
-  const [projectName, setProjectName] = useState('Untitled project');
+  const [projectName, setProjectName] = useState('');
   const [sourceLanguage, setSourceLanguage] = useState('Select source language');
   const [targetLanguage, setTargetLanguage] = useState('Select target language');
   const [activeTab, setActiveTab] = useState<'upload' | 'youtube'>('upload');
@@ -385,7 +385,7 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
         resource_id: activeTab === 'upload' ? resourceId : null,
         source_language: sourceLanguageCode,
         target_language: targetLanguageCode,
-        project_title: projectName,
+        project_title: projectName || 'Untitled project',  // Use default if empty
         // Include additional fields for YouTube URL if needed
         ...(activeTab === 'youtube' && { youtube_url: youtubeUrl }),
         // ...(numberOfSpeakers !== 'Detect' && { number_of_speakers: parseInt(numberOfSpeakers) })
