@@ -359,6 +359,12 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
       return;
     }
     
+    // Validate that source and target languages are different
+    if (sourceLanguage === targetLanguage) {
+      alert('Source and target languages must be different.');
+      return;
+    }
+    
     // For upload tab, we need a resourceId (file should already be uploaded)
     if (activeTab === 'upload' && !resourceId) {
       alert('Please wait for the file to finish uploading.');
@@ -504,7 +510,7 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
                 className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               >
                 {targetLanguages.map(lang => (
-                  <option key={lang} value={lang}>{lang}</option>
+                  <option key={lang} value={lang} disabled={lang === sourceLanguage}>{lang}</option>
                 ))}
               </select>
             </div>
@@ -734,7 +740,15 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
           {/* Submit Button */}
           <button
             type="submit"
-            disabled={uploading || submitting || (!resourceId && activeTab === 'upload') || (!youtubeUrl && activeTab === 'youtube') || sourceLanguage === 'Select source language' || targetLanguage === 'Select target language'}
+            disabled={
+              uploading ||
+              submitting ||
+              (!resourceId && activeTab === 'upload') ||
+              (!youtubeUrl && activeTab === 'youtube') ||
+              sourceLanguage === 'Select source language' ||
+              targetLanguage === 'Select target language' ||
+              sourceLanguage === targetLanguage
+            }
             className="w-full py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-xl hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {uploading ? (
