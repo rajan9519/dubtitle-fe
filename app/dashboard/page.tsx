@@ -325,7 +325,7 @@ export default function Dashboard() {
                     >
                       rajan@dubtitle.com
                     </a>
-                    . We're here to help you scale your dubbing projects.
+                    . We&apos;re here to help you scale your dubbing projects.
                   </p>
                 </div>
               </div>
