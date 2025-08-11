@@ -305,6 +305,33 @@ export default function Dashboard() {
             </button>
           </div>
 
+          {/* Limits Information - Only show if user has at least one dubbing task */}
+          {!tasksLoading && !tasksError && tasks.length > 0 && (
+            <div className="bg-blue-500/10 border border-blue-400/20 rounded-xl p-6 mb-8">
+              <div className="flex items-start space-x-3">
+                <div className="w-6 h-6 bg-blue-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-blue-300 mb-2">Need Higher Limits?</h3>
+                  <p className="text-blue-200 text-sm leading-relaxed">
+                    If you need to increase your dubbing limits or have any questions about your account, 
+                    feel free to reach out to us at{' '}
+                    <a 
+                      href="mailto:rajan@dubtitle.com" 
+                      className="text-blue-300 hover:text-blue-200 underline font-medium transition-colors"
+                    >
+                      rajan@dubtitle.com
+                    </a>
+                    . We're here to help you scale your dubbing projects.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Tasks Content */}
           <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-8 shadow-2xl">
             {tasksLoading ? (
