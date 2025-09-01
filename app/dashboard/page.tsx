@@ -8,6 +8,16 @@ interface User {
   email: string;
 }
 
+interface Transaction {
+  id: string;
+  type: 'credit_purchase' | 'credit_usage' | 'plan_upgrade' | 'plan_downgrade';
+  amount: number;
+  credits_seconds: number;
+  description: string;
+  created_at: string;
+  status: 'pending' | 'completed' | 'failed';
+}
+
 interface DubbingTask {
   id: string;
   user_id: string;
@@ -45,8 +55,8 @@ interface UserUsage {
     duration_processed_this_cycle_seconds: number;
     days_remaining_in_cycle: number;
   };
-  current_period_transactions: any[];
-  recent_transactions: any[];
+  current_period_transactions: Transaction[];
+  recent_transactions: Transaction[];
 }
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://dubtitle.com/api';
