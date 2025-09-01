@@ -1,9 +1,52 @@
 'use client';
 
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { pricingPlans, PricingPlan } from '../../lib/pricing';
+import { isAuthenticated, redirectToLogin } from '../../lib/auth';
 
 export default function Urgency() {
   const router = useRouter();
+  const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
+
+  const handlePlanAction = async (plan: PricingPlan) => {
+    if (plan.buttonAction === 'free') {
+      setLoadingPlan(plan.id);
+      // For free plan, redirect to login with dashboard as return URL
+      redirectToLogin(`${window.location.origin}/dashboard`);
+      return;
+    } 
+    
+    if (plan.buttonAction === 'checkout') {
+      setLoadingPlan(plan.id);
+      
+      try {
+        // Check if user is authenticated first
+        const userAuthenticated = await isAuthenticated();
+        
+        if (!userAuthenticated) {
+          // If not authenticated, redirect to login with return URL to come back to pricing
+          redirectToLogin(`${window.location.origin}${plan.checkoutPath || '/checkout/starter'}`);
+          return;
+        }
+        
+        // If authenticated, navigate to internal checkout page
+        if (plan.checkoutPath) {
+          router.push(plan.checkoutPath);
+        } else {
+          console.error('Checkout path not configured for plan:', plan.name);
+          // User is authenticated but plan misconfigured - go to starter checkout as fallback
+          router.push('/checkout/starter');
+        }
+      } catch (error) {
+        console.error('Error checking authentication:', error);
+        // Fallback to login on error with return URL
+        redirectToLogin(`${window.location.origin}${plan.checkoutPath || '/checkout/starter'}`);
+      } finally {
+        setLoadingPlan(null);
+      }
+    }
+  };
 
   return (
     <section id="pricing" className="py-20 bg-gradient-to-br from-red-500 via-purple-600 to-pink-600 text-white relative overflow-hidden">
@@ -52,103 +95,82 @@ export default function Urgency() {
 
         {/* Pricing Plans */}
         <div className="grid md:grid-cols-3 gap-8 mb-12 max-w-6xl mx-auto">
-          {/* Free Plan */}
-          <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-3xl p-8 text-center flex flex-col">
-            <div className="text-lg font-medium text-red-200 mb-2">FREE</div>
-            <div className="text-4xl font-bold mb-4">
-              <span className="text-yellow-300">$0</span>
-            </div>
-            <div className="text-red-100 mb-6">5 minutes of dubbing</div>
-            <ul className="space-y-3 mb-8 text-left flex-grow">
-              <li className="flex items-center">
-                <span className="text-green-400 mr-2">✓</span>
-                <span>AI dubbing in 50+ languages</span>
-              </li>
-              <li className="flex items-center">
-                <span className="text-green-400 mr-2">✓</span>
-                <span>Voice cloning technology</span>
-              </li>
-              <li className="flex items-center">
-                <span className="text-green-400 mr-2">✓</span>
-                <span>HD quality output</span>
-              </li>
-              <li className="flex items-center">
-                <span className="text-green-400 mr-2">✓</span>
-                <span>5 voice style options</span>
-              </li>
-              <li className="flex items-center">
-                <span className="text-green-400 mr-2">✓</span>
-                <span>Email support</span>
-              </li>
-              <li className="flex items-center">
-                <span className="text-red-400 mr-2">⚠</span>
-                <span>Includes watermark</span>
-              </li>
-            </ul>
-            <button 
-              onClick={() => router.push('/login')}
-              className="w-full py-4 bg-white text-purple-600 font-bold rounded-xl hover:bg-gray-100 transition-all duration-300 mt-auto cursor-pointer"
+          {pricingPlans.map((plan) => (
+            <div
+              key={plan.id}
+              className={`
+                ${plan.popular 
+                  ? 'bg-gradient-to-br from-yellow-400 to-orange-500 rounded-3xl p-8 text-center relative transform scale-105 shadow-2xl flex flex-col' 
+                  : 'bg-white/10 backdrop-blur-sm border border-white/20 rounded-3xl p-8 text-center flex flex-col'
+                }
+              `}
             >
-              Get Started Free
-            </button>
-          </div>
-
-          {/* Starter Plan - Most Popular */}
-          <div className="bg-gradient-to-br from-yellow-400 to-orange-500 rounded-3xl p-8 text-center relative transform scale-105 shadow-2xl flex flex-col">
-            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded-full text-sm font-bold">
-              🔥 MOST POPULAR
+              {plan.popular && (
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded-full text-sm font-bold">
+                  🔥 MOST POPULAR
+                </div>
+              )}
+              
+              <div className={`text-lg font-medium mb-2 ${plan.popular ? 'text-orange-900 mt-4' : 'text-red-200'}`}>
+                {plan.name}
+              </div>
+              
+              <div className={`text-4xl font-bold mb-4 ${plan.popular ? 'text-white' : ''}`}>
+                {plan.originalPrice && (
+                  <span className={`line-through mr-2 ${plan.popular ? 'text-orange-200' : 'text-red-300'}`}>
+                    ${plan.originalPrice}
+                  </span>
+                )}
+                <span className={plan.popular ? '' : 'text-yellow-300'}>
+                  ${plan.price}
+                </span>
+              </div>
+              
+              <div className={`mb-6 ${plan.popular ? 'text-orange-100' : 'text-red-100'}`}>
+                {plan.duration}
+              </div>
+              
+              <ul className="space-y-3 mb-8 text-left flex-grow">
+                {plan.features.map((feature, featureIndex) => (
+                  <li key={featureIndex} className="flex items-center">
+                    <span className={`mr-2 ${plan.popular ? 'text-green-600' : 'text-green-400'}`}>✓</span>
+                    <span>{feature}</span>
+                  </li>
+                ))}
+                {plan.warningFeatures?.map((feature, featureIndex) => (
+                  <li key={`warning-${featureIndex}`} className="flex items-center">
+                    <span className="text-red-400 mr-2">⚠</span>
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              
+              <button 
+                onClick={() => handlePlanAction(plan)}
+                disabled={loadingPlan === plan.id}
+                className={`
+                  w-full py-4 font-bold rounded-xl transition-all duration-300 mt-auto cursor-pointer
+                  disabled:opacity-70 disabled:cursor-not-allowed
+                  ${plan.popular 
+                    ? 'bg-white text-orange-600 hover:bg-gray-100 disabled:hover:bg-white' 
+                    : 'bg-white text-purple-600 hover:bg-gray-100 disabled:hover:bg-white'
+                  }
+                `}
+              >
+                {loadingPlan === plan.id ? (
+                  <div className="flex items-center justify-center">
+                    <svg className="animate-spin -ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    {plan.buttonAction === 'checkout' ? 'Checking auth...' : 'Loading...'}
+                  </div>
+                ) : (
+                  plan.buttonText
+                )}
+              </button>
             </div>
-            <div className="text-lg font-medium text-orange-900 mb-2 mt-4">STARTER</div>
-            <div className="text-4xl font-bold mb-4 text-white">
-              <span className="line-through text-orange-200">$10</span>
-              <span className="ml-2">$5</span>
-            </div>
-            <div className="text-orange-100 mb-6">15 minutes of dubbing</div>
-            <ul className="space-y-3 mb-8 text-left flex-grow">
-              <li className="flex items-center">
-                <span className="text-green-600 mr-2">✓</span>
-                <span>Everything in Free</span>
-              </li>
-              <li className="flex items-center">
-                <span className="text-green-600 mr-2">✓</span>
-                <span>No watermark</span>
-              </li>
-              <li className="flex items-center">
-                <span className="text-green-600 mr-2">✓</span>
-                <span>Advanced voice cloning</span>
-              </li>
-              <li className="flex items-center">
-                <span className="text-green-600 mr-2">✓</span>
-                <span>Priority processing</span>
-              </li>
-            </ul>
-            <button className="w-full py-4 bg-white text-orange-600 font-bold rounded-xl hover:bg-gray-100 transition-all duration-300 mt-auto cursor-pointer">
-              Coming Soon
-            </button>
-          </div>
-
-          {/* Professional Plan */}
-          <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-3xl p-8 text-center flex flex-col">
-            <div className="text-lg font-medium text-red-200 mb-2">PROFESSIONAL</div>
-            <div className="text-4xl font-bold mb-4">
-              <span className="line-through text-red-300">$35</span>
-              <span className="text-yellow-300 ml-2">$25</span>
-            </div>
-            <div className="text-red-100 mb-6">60 minutes of dubbing</div>
-            <ul className="space-y-3 mb-8 text-left flex-grow">
-              <li className="flex items-center">
-                <span className="text-green-400 mr-2">✓</span>
-                <span>Everything in Starter</span>
-              </li>
-              <li className="flex items-center">
-                <span className="text-green-400 mr-2">✓</span>
-                <span>Custom voice training</span>
-              </li>
-            </ul>
-            <button className="w-full py-4 bg-white text-purple-600 font-bold rounded-xl hover:bg-gray-100 transition-all duration-300 mt-auto cursor-pointer">
-              Coming Soon
-            </button>
-          </div>
+          ))}
         </div>
 
         {/* Limited Spots */}

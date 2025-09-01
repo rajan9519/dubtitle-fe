@@ -26,7 +26,7 @@ export default function ValueProposition() {
     },
     {
       icon: "🌐",
-      title: "50+ Languages",
+      title: "30 Languages",
       description: "From Spanish to Mandarin, Hindi to Arabic",
       benefit: "Reach every market"
     },
@@ -96,7 +96,7 @@ export default function ValueProposition() {
                 <tr className="border-b border-gray-100">
                   <td className="py-4 px-6 font-medium text-gray-900">Languages Available</td>
                   <td className="py-4 px-6 text-center text-red-600">5-10 major ones</td>
-                  <td className="py-4 px-6 text-center text-green-600 font-bold">50+ languages</td>
+                  <td className="py-4 px-6 text-center text-green-600 font-bold">30 languages</td>
                 </tr>
                 <tr className="border-b border-gray-100 bg-gray-50">
                   <td className="py-4 px-6 font-medium text-gray-900">Revisions</td>

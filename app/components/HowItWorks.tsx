@@ -16,7 +16,7 @@ export default function HowItWorks() {
     {
       icon: "🌍",
       title: "Choose Target Language",
-      description: "Select from 50+ languages with native-quality AI voices.",
+      description: "Select from 30 languages with native-quality AI voices.",
       details: "Pick the perfect voice tone, accent, and style that matches your content's personality.",
       image: "🗣️"
     },
