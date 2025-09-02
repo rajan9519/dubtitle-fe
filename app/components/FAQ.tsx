@@ -19,10 +19,6 @@ export default function FAQ() {
       answer: "Most videos are processed in 2-10 minutes depending on length and complexity. A 10-minute video typically takes 8-12 minutes to complete. This includes translation, voice generation, and lip-sync processing. Compare this to traditional dubbing which takes 2-6 weeks!"
     },
     {
-      question: "Can I adjust the voice tone and style?",
-      answer: "Absolutely! You have full control over voice characteristics including tone (professional, casual, energetic), speed, accent, and even emotional expression. You can preview different options and make unlimited revisions until it's perfect. We also offer voice cloning to match your original speaker's voice."
-    },
-    {
       question: "What video formats do you support?",
       answer: "We support all major video formats including MP4, MOV, AVI, WMV, MKV, FLV, and more. Maximum file size is 2GB for individual uploads. We automatically optimize your video for the best dubbing results while maintaining original quality."
     },
@@ -32,19 +28,15 @@ export default function FAQ() {
     },
     {
       question: "How much does it cost?",
-      answer: "Our pricing starts at $29 for videos up to 10 minutes, $59 for up to 30 minutes, and $99 for up to 60 minutes. This includes unlimited revisions and downloads. Enterprise plans start at $299/month with volume discounts. No hidden fees, no per-language charges."
+      answer: "We offer three flexible plans: Free ($0) gives you 5 minutes of total dubbing with videos up to 30 seconds each (includes watermark). Starter ($7, originally $10) provides 20 minutes of total dubbing with videos up to 2 minutes each, no watermark. Professional ($25, originally $40) offers 90 minutes of total dubbing with videos up to 10 minutes each. All plans include AI dubbing in 30 languages, voice cloning, and HD quality output."
     },
     {
       question: "Can I try it before buying?",
-      answer: "Yes! We offer a 7-day free trial with no credit card required. You can dub up to 3 videos (max 5 minutes each) to test the quality. We also offer a 30-day money-back guarantee if you're not completely satisfied."
-    },
-    {
-      question: "What if I'm not satisfied with the results?",
-      answer: "We offer unlimited revisions during your project. If you're still not satisfied, we provide a 30-day money-back guarantee. Our success rate is 98%+ customer satisfaction, and our support team will work with you to get the perfect result."
+      answer: "Absolutely! Our free plan gives you 5 minutes of total dubbing to test the quality with no credit card required. You can dub multiple videos up to 30 seconds each to experience our AI dubbing firsthand. The free plan includes all core features like 30-language support and voice cloning, with a small watermark. We also offer a 30-day money-back guarantee on paid plans."
     },
     {
       question: "Do you offer bulk discounts for multiple videos?",
-      answer: "Yes! We offer volume discounts starting at 20% off for 10+ videos per month. Enterprise customers get up to 50% off with annual plans. Contact our sales team for custom pricing if you have large volume needs."
+      answer: "Our plans are already designed to provide great value for bulk dubbing with generous minute allowances. The Professional plan gives you 90 minutes of dubbing for just $25. For enterprise customers with high-volume needs, contact our sales team at rajan@dubtitle.com for custom pricing and volume discounts."
     }
   ];
 
