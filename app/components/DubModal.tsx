@@ -7,7 +7,7 @@ import { trackButtonClick } from './GoogleAnalytics';
 export const languageMap: { [key: string]: string } = {
     ara: 'Arabic',
     bul: 'Bulgarian',
-    cmn: 'Chinese',
+    zho: 'Chinese',
     hrv: 'Croatian',
     ces: 'Czech',
     dan: 'Danish',
