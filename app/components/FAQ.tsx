@@ -12,7 +12,7 @@ export default function FAQ() {
     },
     {
       question: "What languages do you support?",
-      answer: "We support 30 languages including Spanish, French, German, Italian, Portuguese, Russian, Chinese (Mandarin & Cantonese), Japanese, Korean, Hindi, Arabic, Dutch, Swedish, Norwegian, Danish, Polish, Turkish, Greek, Hebrew, Thai, Vietnamese, and many more. We're constantly adding new languages based on user demand."
+      answer: "We support 29 languages including Spanish, French, German, Italian, Portuguese, Russian, Chinese, Japanese, Korean, Hindi, Arabic, Dutch, Swedish, Danish, Polish, Turkish, Greek, Bulgarian, Croatian, Czech, Filipino, Finnish, Indonesian, Malay, Romanian, Slovak, Tamil, and Ukrainian. We're constantly adding new languages based on user demand."
     },
     {
       question: "How long does it take to dub a video?",
