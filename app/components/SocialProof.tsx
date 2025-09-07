@@ -1,7 +1,7 @@
 export default function SocialProof() {
   const testimonials = [
     {
-      name: "MyGlueCode",
+      name: "Voice Worth Hearing",
       role: "YouTube Creator",
       avatar: "👨🏻‍💻",
       rating: 5,
