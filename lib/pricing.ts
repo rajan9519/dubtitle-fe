@@ -45,7 +45,7 @@ export const pricingPlans: PricingPlan[] = [
     features: [
       'Everything in Free',
       'No watermark',
-      'Maximum 2 minutes per video/audio',
+      // 'Maximum 15 minutes per video/audio',
       'Priority processing'
     ],
     checkoutUrl: process.env.NEXT_PUBLIC_LEMONSQUEEZY_STARTER_CHECKOUT_URL,
@@ -63,7 +63,7 @@ export const pricingPlans: PricingPlan[] = [
     maxPerVideoMinutes: 10,
     features: [
       'Everything in Starter',
-      'Maximum 10 minutes per video/audio'
+      // 'Maximum 30 minutes per video/audio'
     ],
     checkoutUrl: process.env.NEXT_PUBLIC_LEMONSQUEEZY_PROFESSIONAL_CHECKOUT_URL,
     checkoutPath: '/checkout/professional',
