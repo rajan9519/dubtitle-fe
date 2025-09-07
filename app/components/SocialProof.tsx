@@ -1,39 +1,39 @@
 export default function SocialProof() {
   const testimonials = [
     {
-      name: "Sarah Chen",
+      name: "MyGlueCode",
       role: "YouTube Creator",
-      avatar: "👩🏻‍💼",
+      avatar: "👨🏻‍💻",
       rating: 5,
-      text: "DubTitle transformed my channel! I went from English-only to 5 languages in a week. My Spanish audience alone doubled my revenue.",
-      metrics: "+150% revenue"
+      text: "I use this to dub famous informative videos in Hindi for Indian people to learn from. My audience can now access valuable educational content in their native language. The quality makes complex topics easy to understand.",
+      // metrics: "Educational Hindi dubbing"
     },
     {
-      name: "Marcus Rodriguez",
-      role: "Online Course Creator",
-      subscribers: "Educational Content",
+      name: "Lakshit Ukani",
+      role: "Udemy Instructor",
+      subscribers: "Online Educator",
       avatar: "👨🏽‍🏫",
       rating: 4,
-      text: "I was spending $300+ per course translation. Now I do it for $9 and get better quality. My courses are available in 12 languages!",
-      metrics: "12 languages"
+      text: "I'm using this for my Udemy courses and it's been a game changer. Students from different countries can now access my content in their native languages. The technical accuracy is spot on.",
+      // metrics: "Multiple course languages"
     },
     {
-      name: "Emma Thompson",
-      role: "Brand Marketer",
-      subscribers: "Fortune 500 Company",
-      avatar: "👩🏼‍💼",
-      rating: 4,
-      text: "Game changer for our global campaigns. We can test messaging in multiple markets instantly instead of waiting months for translations.",
-      metrics: "3x faster campaigns"
-    },
-    {
-      name: "David Kim",
-      role: "Documentary Filmmaker",
-      subscribers: "Independent Creator",
+      name: "Somorik",
+      role: "Content Enthusiast",
+      subscribers: "Personal User",
       avatar: "👨🏻‍🎬",
       rating: 5,
-      text: "My documentary about climate change needed to reach global audiences. DubTitle made it possible on my indie budget. 10/10!",
-      metrics: "Global distribution"
+      text: "I use this to dub US shows in Russian for my personal enjoyment. It's amazing how I can now enjoy my favorite American series in Russian. The voice quality makes it feel natural.",
+      // metrics: "Personal entertainment"
+    },
+    {
+      name: "Riley P.",
+      role: "Indie Filmmaker",
+      subscribers: "Film Student",
+      avatar: "👩🏼‍🎬",
+      rating: 4,
+      text: "Used it for my short film festival submissions. The quality varies by language - French was great, Mandarin needed some tweaks. But hey, it got my film seen internationally.",
+      // metrics: "8 festival submissions"
     }
   ];
 
@@ -47,12 +47,12 @@ export default function SocialProof() {
   ];
 
   const stats = [
-    { number: "500+", label: "Minutes Dubbed", icon: "🎬" },
-    { number: "50+", label: "Happy Creators", icon: "😊" },
-    { number: "50+", label: "Languages", icon: "🌍" },
+    { number: "100+", label: "Minutes Dubbed", icon: "🎬" },
+    { number: "10+", label: "Happy Creators", icon: "😊" },
+    { number: "30+", label: "Languages", icon: "🌍" },
     { number: "99.2%", label: "Accuracy Rate", icon: "🎯" },
     { number: "2min", label: "Average Time", icon: "⚡" },
-    { number: "4.9/5", label: "User Rating", icon: "⭐" }
+    { number: "4.8/5", label: "User Rating", icon: "⭐" }
   ];
 
   return (
@@ -107,9 +107,9 @@ export default function SocialProof() {
                 
                 <p className="text-gray-700 mb-4 leading-relaxed">&quot;{testimonial.text}&quot;</p>
                 
-                <div className="bg-purple-50 border border-purple-200 rounded-lg p-3">
+                {/* <div className="bg-purple-50 border border-purple-200 rounded-lg p-3">
                   <div className="text-purple-700 text-sm font-bold">Result: {testimonial.metrics}</div>
-                </div>
+                </div> */}
               </div>
             ))}
           </div>
