@@ -45,7 +45,7 @@ export const pricingPlans: PricingPlan[] = [
     features: [
       'Everything in Free',
       'No watermark',
-      // 'Maximum 15 minutes per video/audio',
+      'Unlimited duration per video/audio',
       'Priority processing'
     ],
     checkoutUrl: process.env.NEXT_PUBLIC_LEMONSQUEEZY_STARTER_CHECKOUT_URL,
