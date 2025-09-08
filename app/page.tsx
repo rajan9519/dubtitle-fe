@@ -11,7 +11,7 @@ import HowItWorks from "./components/HowItWorks";
 import FAQ from "./components/FAQ";
 import Urgency from "./components/Urgency";
 import Footer from "./components/Footer";
-import LogoCloud from "./components/LogoCloud";
+// import LogoCloud from "./components/LogoCloud";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
