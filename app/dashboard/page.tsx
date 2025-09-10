@@ -273,19 +273,64 @@ export default function Dashboard() {
     }
   };
 
-  const getStatusText = (status: string) => {
+  const getStatusText = (status: string, truncate: boolean = false) => {
+    let displayText: string;
+    
     switch (status) {
       case 'completed':
-        return 'Completed';
+        displayText = 'Completed';
+        break;
       case 'failed':
-        return 'Failed';
+        displayText = 'Failed';
+        break;
       case 'processing':
-        return 'Processing';
+        displayText = 'Processing';
+        break;
       case 'queued':
-        return 'Queued';
+        displayText = 'Queued';
+        break;
       default:
-        return status;
+        displayText = status;
+        break;
     }
+
+    // If truncate is true and the text is longer than 50 characters, truncate it
+    if (truncate && displayText.length > 50) {
+      return displayText.substring(0, 50) + '...';
+    }
+    
+    return displayText;
+  };
+
+  // Simple tooltip component for showing full error messages
+  const StatusTooltip = ({ status, children }: { status: string; children: React.ReactNode }) => {
+    const [showTooltip, setShowTooltip] = useState(false);
+    const isLongStatus = status.length > 50 && !['completed', 'failed', 'processing', 'queued'].includes(status);
+
+    if (!isLongStatus) {
+      return <>{children}</>;
+    }
+
+    return (
+      <div 
+        className="relative"
+        onMouseEnter={() => setShowTooltip(true)}
+        onMouseLeave={() => setShowTooltip(false)}
+      >
+        {children}
+        {showTooltip && (
+          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 z-50">
+            <div className="bg-gray-800 text-white text-xs rounded-lg px-3 py-2 shadow-lg border border-gray-600 max-w-xs">
+              <div className="whitespace-normal break-words">{status}</div>
+              {/* Arrow */}
+              <div className="absolute top-full left-1/2 transform -translate-x-1/2">
+                <div className="border-4 border-transparent border-t-gray-800"></div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
   };
 
   const getStatusColor = (status: string) => {
@@ -525,7 +570,9 @@ export default function Dashboard() {
                             <h3 className="text-lg lg:text-xl font-semibold text-white truncate pr-2">{task.project_title || 'Untitled Project'}</h3>
                             {/* Mobile status */}
                             <div className={`lg:hidden text-xs font-medium ${getStatusColor(task.status)} flex items-center space-x-1 flex-shrink-0`}>
-                              <span>{getStatusText(task.status)}</span>
+                              <StatusTooltip status={task.status}>
+                                <span className="cursor-help">{getStatusText(task.status, true)}</span>
+                              </StatusTooltip>
                             </div>
                           </div>
                           
@@ -577,7 +624,9 @@ export default function Dashboard() {
                       {/* Desktop Actions */}
                       <div className="hidden lg:flex flex-col items-end space-y-3 flex-shrink-0">
                         <div className={`text-sm font-medium ${getStatusColor(task.status)} flex items-center space-x-2`}>
-                          <span>{getStatusText(task.status)}</span>
+                          <StatusTooltip status={task.status}>
+                            <span className="cursor-help max-w-[200px] truncate">{getStatusText(task.status, true)}</span>
+                          </StatusTooltip>
                         </div>
                         {task.status === 'processing' && (
                           <div className="flex items-center space-x-3">
