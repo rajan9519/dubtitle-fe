@@ -1,4 +1,10 @@
+'use client';
+
+import { useCurrency } from '../../lib/currency-context';
+import { convertPrice, formatPrice } from '../../lib/pricing';
+
 export default function ValueProposition() {
+  const { currency } = useCurrency();
   const features = [
     {
       icon: "🤖",
@@ -15,7 +21,7 @@ export default function ValueProposition() {
     {
       icon: "💰",
       title: "99% Cost Reduction",
-      description: "From $100-500 to just $1-10 per video",
+      description: `From ${formatPrice(convertPrice(100, currency), currency)}-${formatPrice(convertPrice(500, currency), currency)} to just ${formatPrice(convertPrice(1, currency), currency)}-${formatPrice(convertPrice(10, currency), currency)} per video`,
       benefit: "Affordable for everyone"
     },
     {
@@ -90,8 +96,8 @@ export default function ValueProposition() {
                 </tr>
                 <tr className="border-b border-gray-100 bg-gray-50">
                   <td className="py-4 px-6 font-medium text-gray-900">Cost per Video</td>
-                  <td className="py-4 px-6 text-center text-red-600">$100-500+</td>
-                  <td className="py-4 px-6 text-center text-green-600 font-bold">$1-10</td>
+                  <td className="py-4 px-6 text-center text-red-600">{formatPrice(convertPrice(100, currency), currency)}-{formatPrice(convertPrice(500, currency), currency)}+</td>
+                  <td className="py-4 px-6 text-center text-green-600 font-bold">{formatPrice(convertPrice(1, currency), currency)}-{formatPrice(convertPrice(10, currency), currency)}</td>
                 </tr>
                 <tr className="border-b border-gray-100">
                   <td className="py-4 px-6 font-medium text-gray-900">Languages Available</td>
@@ -100,7 +106,7 @@ export default function ValueProposition() {
                 </tr>
                 <tr className="border-b border-gray-100 bg-gray-50">
                   <td className="py-4 px-6 font-medium text-gray-900">Revisions</td>
-                  <td className="py-4 px-6 text-center text-red-600">$200+ each</td>
+                  <td className="py-4 px-6 text-center text-red-600">{formatPrice(convertPrice(200, currency), currency)}+ each</td>
                   <td className="py-4 px-6 text-center text-green-600 font-bold">Unlimited & Free</td>
                 </tr>
                 <tr className="border-b border-gray-100">

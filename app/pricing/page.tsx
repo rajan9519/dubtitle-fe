@@ -3,12 +3,15 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getUser, User, redirectToLogin, isAuthenticated } from '../../lib/auth';
-import { pricingPlans, PricingPlan } from '../../lib/pricing';
+import { pricingPlans, PricingPlan, convertPrice, formatPrice } from '../../lib/pricing';
+import { useCurrency } from '../../lib/currency-context';
+import CurrencyToggle from '../components/CurrencyToggle';
 
 export default function PricingPage() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [processingPlan, setProcessingPlan] = useState<string | null>(null);
+  const { currency } = useCurrency();
   const router = useRouter();
 
   useEffect(() => {
@@ -130,10 +133,12 @@ export default function PricingPage() {
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
               Choose Your Plan
             </h1>
-            <p className="text-xl text-red-100 max-w-3xl mx-auto">
+            <p className="text-xl text-red-100 max-w-3xl mx-auto mb-8">
               Unlock the power of AI dubbing with our flexible pricing plans. 
               From getting started to scaling your business, we have the perfect plan for you.
             </p>
+            
+            <CurrencyToggle className="mb-8" />
           </div>
 
           {/* Pricing Cards */}
@@ -161,11 +166,11 @@ export default function PricingPage() {
                 <div className={`text-4xl font-bold mb-4 ${plan.popular ? 'text-white' : ''}`}>
                   {plan.originalPrice && (
                     <span className={`line-through mr-2 ${plan.popular ? 'text-orange-200' : 'text-red-300'}`}>
-                      ${plan.originalPrice}
+                      {formatPrice(convertPrice(plan.originalPrice, currency), currency)}
                     </span>
                   )}
                   <span className={plan.popular ? '' : 'text-yellow-300'}>
-                    ${plan.price}
+                    {formatPrice(convertPrice(plan.price, currency), currency)}
                   </span>
                 </div>
                 

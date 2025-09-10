@@ -2,12 +2,15 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { pricingPlans, PricingPlan } from '../../lib/pricing';
+import { pricingPlans, PricingPlan, convertPrice, formatPrice } from '../../lib/pricing';
 import { isAuthenticated, redirectToLogin } from '../../lib/auth';
+import { useCurrency } from '../../lib/currency-context';
+import CurrencyToggle from './CurrencyToggle';
 
 export default function Urgency() {
   const router = useRouter();
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
+  const { currency } = useCurrency();
 
   const handlePlanAction = async (plan: PricingPlan) => {
     if (plan.buttonAction === 'free') {
@@ -57,6 +60,17 @@ export default function Urgency() {
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
+        {/* Header with Currency Toggle */}
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+            Choose Your Plan
+          </h2>
+          <p className="text-xl text-red-100 max-w-2xl mx-auto leading-relaxed mb-8">
+            Start your AI dubbing journey today. Pick the plan that fits your needs.
+          </p>
+          <CurrencyToggle className="mb-8" />
+        </div>
+
         {/* <div className="text-center mb-12">
           <div className="inline-flex items-center bg-red-100 text-red-600 px-4 py-2 rounded-full text-sm font-medium mb-6">
             🔥 Limited Time Offer
@@ -118,11 +132,11 @@ export default function Urgency() {
               <div className={`text-4xl font-bold mb-4 ${plan.popular ? 'text-white' : ''}`}>
                 {plan.originalPrice && (
                   <span className={`line-through mr-2 ${plan.popular ? 'text-orange-200' : 'text-red-300'}`}>
-                    ${plan.originalPrice}
+                    {formatPrice(convertPrice(plan.originalPrice, currency), currency)}
                   </span>
                 )}
                 <span className={plan.popular ? '' : 'text-yellow-300'}>
-                  ${plan.price}
+                  {formatPrice(convertPrice(plan.price, currency), currency)}
                 </span>
               </div>
               

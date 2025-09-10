@@ -56,8 +56,8 @@ export default function Home() {
       <HowItWorks />
       <SocialProof />
       {/* <TeamSection /> */}
-      <FAQ />
       <Urgency />
+      <FAQ />
       <Footer />
     </div>
   );

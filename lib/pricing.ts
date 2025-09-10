@@ -1,5 +1,7 @@
 // Pricing configuration for LemonSqueezy integration
 
+export type Currency = 'USD' | 'INR';
+
 export interface PricingPlan {
   id: string;
   name: string;
@@ -15,6 +17,27 @@ export interface PricingPlan {
   popular?: boolean;
   warningFeatures?: string[];
 }
+
+// Currency conversion utility
+export const EXCHANGE_RATE_USD_TO_INR = 90;
+
+export const convertPrice = (priceUSD: number, currency: Currency): number => {
+  if (currency === 'INR') {
+    return Math.round(priceUSD * EXCHANGE_RATE_USD_TO_INR);
+  }
+  return priceUSD;
+};
+
+export const formatPrice = (price: number, currency: Currency): string => {
+  if (currency === 'INR') {
+    return `₹${price}`;
+  }
+  return `$${price}`;
+};
+
+export const getCurrencySymbol = (currency: Currency): string => {
+  return currency === 'INR' ? '₹' : '$';
+};
 
 export const pricingPlans: PricingPlan[] = [
   {

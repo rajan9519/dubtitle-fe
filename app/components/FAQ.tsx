@@ -1,9 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import { useCurrency } from '../../lib/currency-context';
+import { formatPrice, convertPrice, pricingPlans } from '../../lib/pricing';
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const { currency } = useCurrency();
 
   const faqs = [
     {
@@ -28,7 +31,7 @@ export default function FAQ() {
     },
     {
       question: "How much does it cost?",
-      answer: "We offer three flexible plans: Free ($0) gives you 5 minutes of total dubbing with videos up to 30 seconds each (includes watermark). Starter ($7, originally $10) provides 20 minutes of total dubbing with videos up to 2 minutes each, no watermark. Professional ($25, originally $40) offers 90 minutes of total dubbing with videos up to 10 minutes each. All plans include AI dubbing in 30 languages, voice cloning, and HD quality output."
+      answer: `We offer three flexible plans: Free (${formatPrice(0, currency)}) gives you 5 minutes of total dubbing with videos up to 30 seconds each (includes watermark). Starter (${formatPrice(convertPrice(pricingPlans[1].price, currency), currency)}, originally ${formatPrice(convertPrice(pricingPlans[1].originalPrice || 10, currency), currency)}) provides 20 minutes of total dubbing with videos up to 2 minutes each, no watermark. Professional (${formatPrice(convertPrice(pricingPlans[2].price, currency), currency)}, originally ${formatPrice(convertPrice(pricingPlans[2].originalPrice || 40, currency), currency)}) offers 90 minutes of total dubbing with videos up to 10 minutes each. All plans include AI dubbing in 30 languages, voice cloning, and HD quality output.`
     },
     {
       question: "Can I try it before buying?",
@@ -36,7 +39,7 @@ export default function FAQ() {
     },
     {
       question: "Do you offer bulk discounts for multiple videos?",
-      answer: "Our plans are already designed to provide great value for bulk dubbing with generous minute allowances. The Professional plan gives you 90 minutes of dubbing for just $25. For enterprise customers with high-volume needs, contact our sales team at rajan@dubtitle.com for custom pricing and volume discounts."
+      answer: `Our plans are already designed to provide great value for bulk dubbing with generous minute allowances. The Professional plan gives you 90 minutes of dubbing for just ${formatPrice(convertPrice(pricingPlans[2].price, currency), currency)}. For enterprise customers with high-volume needs, contact our sales team at rajan@dubtitle.com for custom pricing and volume discounts.`
     }
   ];
 
