@@ -281,8 +281,10 @@ export default function Dashboard() {
         return 'Failed';
       case 'processing':
         return 'Processing';
-      default:
+      case 'queued':
         return 'Queued';
+      default:
+        return status;
     }
   };
 
