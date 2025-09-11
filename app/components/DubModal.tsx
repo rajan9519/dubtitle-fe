@@ -154,8 +154,8 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
   const [activeTab, setActiveTab] = useState<'upload' | 'youtube'>('upload');
 //   const [createDubbingProject, setCreateDubbingProject] = useState(false);
   // const [numberOfSpeakers, setNumberOfSpeakers] = useState('Detect');
-//   const [startTime, setStartTime] = useState('');
-//   const [endTime, setEndTime] = useState('');
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const [youtubeUrl, setYoutubeUrl] = useState('');
   const [dragActive, setDragActive] = useState(false);
@@ -168,6 +168,69 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
   const [alertMessage, setAlertMessage] = useState('');
   
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Helper function to validate time format (hh:mm:ss)
+  const isValidTimeFormat = (time: string): boolean => {
+    if (!time.trim()) return true; // Empty is valid (optional)
+    const timeRegex = /^([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})$/;
+    const match = time.match(timeRegex);
+    if (!match) return false;
+    
+    const hours = parseInt(match[1], 10);
+    const minutes = parseInt(match[2], 10);
+    const seconds = parseInt(match[3], 10);
+    
+    return hours >= 0 && minutes >= 0 && minutes < 60 && seconds >= 0 && seconds < 60;
+  };
+
+  // Helper function to convert hh:mm:ss to seconds
+  const timeToSeconds = (time: string): number => {
+    if (!time.trim()) return 0;
+    const [hours, minutes, seconds] = time.split(':').map(num => parseInt(num, 10));
+    return hours * 3600 + minutes * 60 + seconds;
+  };
+
+  // Helper function to format time input automatically
+  const formatTimeInput = (input: string): string => {
+    // Remove all non-digit characters
+    const digitsOnly = input.replace(/\D/g, '');
+    
+    // If empty, return empty
+    if (!digitsOnly) return '';
+    
+    // Pad with leading zeros to make it 6 digits
+    const paddedDigits = digitsOnly.padStart(6, '0');
+    
+    // Extract hours, minutes, seconds (last 6 digits)
+    let hours = parseInt(paddedDigits.slice(-6, -4), 10);
+    let minutes = parseInt(paddedDigits.slice(-4, -2), 10);
+    let seconds = parseInt(paddedDigits.slice(-2), 10);
+    
+    // Handle overflow for seconds
+    if (seconds >= 60) {
+      minutes += Math.floor(seconds / 60);
+      seconds = seconds % 60;
+    }
+    
+    // Handle overflow for minutes
+    if (minutes >= 60) {
+      hours += Math.floor(minutes / 60);
+      minutes = minutes % 60;
+    }
+    
+    // Format with leading zeros
+    const formattedHours = hours.toString().padStart(2, '0');
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    const formattedSeconds = seconds.toString().padStart(2, '0');
+    
+    return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+  };
+
+  // Helper function to handle time input blur (format when user is done typing)
+  const handleTimeInputBlur = (value: string, setter: (time: string) => void) => {
+    const formatted = formatTimeInput(value);
+    setter(formatted);
+  };
 
   // Helper function to show alert
   const showAlertMessage = (type: 'success' | 'error', message: string) => {
@@ -377,6 +440,23 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
       return;
     }
 
+    // Validate time format if provided
+    if (startTime && !isValidTimeFormat(startTime)) {
+      alert('Please enter a valid start time in hh:mm:ss format (e.g., 01:30:45).');
+      return;
+    }
+
+    if (endTime && !isValidTimeFormat(endTime)) {
+      alert('Please enter a valid end time in hh:mm:ss format (e.g., 01:30:45).');
+      return;
+    }
+
+    // Validate that start time is before end time if both are provided
+    if (startTime && endTime && timeToSeconds(startTime) >= timeToSeconds(endTime)) {
+      alert('Start time must be before end time.');
+      return;
+    }
+
     // Convert display names back to language codes
     const sourceLanguageCode = getLanguageCode(sourceLanguage, languageMap);
     const targetLanguageCode = getLanguageCode(targetLanguage, targetLanguageMap);
@@ -394,6 +474,9 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
         project_title: projectName || 'Untitled project',  // Use default if empty
         // Include additional fields for YouTube URL if needed
         ...(activeTab === 'youtube' && { youtube_url: youtubeUrl }),
+        // Include time range if provided
+        ...(startTime && { start_time: timeToSeconds(startTime) }),
+        ...(endTime && { end_time: timeToSeconds(endTime) }),
         // ...(numberOfSpeakers !== 'Detect' && { number_of_speakers: parseInt(numberOfSpeakers) })
       };
 
@@ -715,27 +798,33 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
           </div> */}
 
           {/* Time Range */}
-          {/* <div>
+          <div>
             <label className="block text-sm font-medium text-gray-300 mb-2">
               Time range to dub
             </label>
             <div className="flex space-x-4">
-              <input
-                type="text"
-                value={startTime}
-                onChange={(e) => setStartTime(e.target.value)}
-                className="flex-1 px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                placeholder="hh:mm:ss"
-              />
-              <input
-                type="text"
-                value={endTime}
-                onChange={(e) => setEndTime(e.target.value)}
-                className="flex-1 px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                placeholder="hh:mm:ss"
-              />
+              <div className="flex-1">
+                <input
+                  type="text"
+                  value={startTime}
+                  onChange={(e) => setStartTime(e.target.value)}
+                  onBlur={(e) => handleTimeInputBlur(e.target.value, setStartTime)}
+                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  placeholder="00:00:00"
+                />
+              </div>
+              <div className="flex-1">
+                <input
+                  type="text"
+                  value={endTime}
+                  onChange={(e) => setEndTime(e.target.value)}
+                  onBlur={(e) => handleTimeInputBlur(e.target.value, setEndTime)}
+                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  placeholder="00:00:00"
+                />
+              </div>
             </div>
-          </div> */}
+          </div>
 
           {/* Submit Button */}
           <button
