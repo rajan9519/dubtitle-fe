@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
 import { useState } from 'react';
 import { useCurrency } from '../../lib/currency-context';
 import { formatPrice, convertPrice, pricingPlans } from '../../lib/pricing';
 
 export default function FAQ() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openFAQ, setOpenFAQ] = useState<number | null>(null);
   const { currency } = useCurrency();
 
   const faqs = [
     {
-      question: "How accurate is the AI dubbing compared to human voice actors?",
-      answer: "Our AI achieves 99.2% accuracy in translation and voice matching. We use advanced neural networks trained on millions of hours of speech data. While human voice actors can vary in quality and consistency, our AI delivers consistent, professional results every time. For most content types, viewers cannot distinguish between our AI dubbing and professional human dubbing."
+      question: "How accurate is the AI dubbing?",
+      answer: "Our AI dubbing achieves 95%+ accuracy in voice replication and maintains natural speech patterns. The technology preserves emotion, tone, and speaking style for authentic results."
     },
     {
       question: "What languages do you support?",
@@ -19,11 +19,15 @@ export default function FAQ() {
     },
     {
       question: "How long does it take to dub a video?",
-      answer: "Most videos are processed in 2-10 minutes depending on length and complexity. A 10-minute video typically takes 8-12 minutes to complete. This includes translation, voice generation, and lip-sync processing. Compare this to traditional dubbing which takes 2-6 weeks!"
+      answer: "Most videos are processed within 2-10 minutes, depending on length and complexity. Short videos (under 5 minutes) typically complete in under 2 minutes."
+    },
+    {
+      question: "Can I use my own voice for dubbing?",
+      answer: "Yes! You can clone your own voice and use it for dubbing in different languages. This maintains consistency across your multilingual content."
     },
     {
       question: "What video formats do you support?",
-      answer: "We support all major video formats including MP4, MOV, AVI, WMV, MKV, FLV, and more. Maximum file size is 2GB for individual uploads. We automatically optimize your video for the best dubbing results while maintaining original quality."
+      answer: "We support all major video formats including MP4, MOV, AVI, MKV, and more. You can also directly import from YouTube, Vimeo, and other platforms."
     },
     {
       question: "Is my content secure and private?",
@@ -44,90 +48,54 @@ export default function FAQ() {
   ];
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center bg-orange-100 text-orange-600 px-4 py-2 rounded-full text-sm font-medium mb-6">
-            ❓ Frequently Asked Questions
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Got Questions? <span className="text-orange-600">We Have Answers</span>
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Everything you need to know about AI dubbing, pricing, and getting started
-          </p>
-        </div>
-
         <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              Frequently asked questions
+            </h2>
+            <p className="text-xl text-gray-600">
+              Everything you need to know about our AI dubbing platform
+            </p>
+          </div>
+
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div 
-                key={index} 
-                className="bg-gray-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
-              >
+              <div key={index} className="bg-white rounded-lg border border-gray-200">
                 <button
-                  className="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-100 transition-colors duration-200"
-                  onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                  onClick={() => setOpenFAQ(openFAQ === index ? null : index)}
+                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
                 >
-                  <h3 className="text-lg font-bold text-gray-900 pr-4">
-                    {faq.question}
-                  </h3>
-                  <div className={`flex-shrink-0 w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center transition-transform duration-300 ${
-                    openIndex === index ? 'rotate-45 bg-orange-500' : ''
-                  }`}>
-                    <svg 
-                      className={`w-4 h-4 transition-colors duration-300 ${
-                        openIndex === index ? 'text-white' : 'text-orange-600'
-                      }`} 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                    </svg>
-                  </div>
+                  <span className="font-semibold text-gray-900">{faq.question}</span>
+                  <svg
+                    className={`w-5 h-5 text-gray-500 transform transition-transform ${
+                      openFAQ === index ? 'rotate-180' : ''
+                    }`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
                 </button>
-                
-                <div className={`overflow-hidden transition-all duration-300 ${
-                  openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                }`}>
-                  <div className="px-8 pb-6">
-                    <p className="text-gray-700 leading-relaxed">
-                      {faq.answer}
-                    </p>
+                {openFAQ === index && (
+                  <div className="px-6 pb-4">
+                    <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
                   </div>
-                </div>
+                )}
               </div>
             ))}
           </div>
-        </div>
 
-        {/* Still have questions CTA */}
-        <div className="text-center mt-16">
-          <div className="bg-gradient-to-br from-orange-50 to-red-50 rounded-3xl p-12 max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">
-              Still Have Questions?
-            </h3>
-            <p className="text-gray-600 mb-8">
-              Our support team is here to help you succeed. Get answers in minutes, not hours.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              {/* <button className="group px-8 py-4 bg-orange-500 text-white font-bold rounded-full hover:bg-orange-600 transition-all duration-300 hover:scale-105">
-                💬 Live Chat Support
-              </button> */}
-              <button className="group px-8 py-4 bg-white border-2 border-orange-500 text-orange-600 font-bold rounded-full hover:bg-orange-50 transition-all duration-300 hover:scale-105">
-                📧 Email Support
-              </button>
-            </div>
-            
-            <div className="mt-6 text-sm text-gray-500">
-              <p>📞 Average response time: 2 minutes</p>
-              <p>✅ 24/7 support • ✅ 98% satisfaction rate</p>
-            </div>
+          <div className="text-center mt-12">
+            <p className="text-gray-600 mb-4">Still have questions?</p>
+            <a href="/contact" className="text-blue-600 hover:text-blue-700 font-semibold transition-colors">
+              Contact our support team
+            </a>
           </div>
         </div>
       </div>
     </section>
   );
-} 
+}

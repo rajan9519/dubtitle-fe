@@ -4,135 +4,87 @@ import { useCurrency } from '../../lib/currency-context';
 import { convertPrice, formatPrice } from '../../lib/pricing';
 
 export default function ValueProposition() {
-  const { currency } = useCurrency();
-  const features = [
+  const testimonials = [
     {
-      icon: "🤖",
-      title: "AI-Powered Excellence",
-      description: "Advanced neural networks trained on millions of hours of speech",
-      benefit: "Perfect emotion & tone matching"
+      name: "Alex Rivera",
+      role: "YouTube Creator, 500K subscribers",
+      content: "DubTitle saved me thousands of dollars and weeks of time. I can now reach Spanish and French audiences with the same quality as my English content.",
+      avatar: "👨🏽‍💼"
     },
     {
-      icon: "⚡",
-      title: "Lightning Fast",
-      description: "Complete dubbing in 2-10 minutes, not weeks",
-      benefit: "Keep your content momentum"
+      name: "Priya Sharma",
+      role: "Educational Content Creator",
+      content: "The voice cloning is incredible. My students in different countries can learn in their native language while still hearing my actual voice.",
+      avatar: "👩🏽‍🏫"
     },
     {
-      icon: "💰",
-      title: "99% Cost Reduction",
-      description: `From ${formatPrice(convertPrice(100, currency), currency)}-${formatPrice(convertPrice(500, currency), currency)} to just ${formatPrice(convertPrice(1, currency), currency)}-${formatPrice(convertPrice(10, currency), currency)} per video`,
-      benefit: "Affordable for everyone"
-    },
-    {
-      icon: "🎯",
-      title: "Perfect Lip Sync (Coming Soon)",
-      description: "AI analyzes facial movements for natural synchronization",
-      benefit: "Professional studio quality"
-    },
-    {
-      icon: "🌐",
-      title: "30 Languages",
-      description: "From Spanish to Mandarin, Hindi to Arabic",
-      benefit: "Reach every market"
-    },
-    {
-      icon: "🔧",
-      title: "Full Control",
-      description: "Adjust speed, tone, accent, and timing to your liking",
-      benefit: "Your voice, your way"
+      name: "Marcus Johnson",
+      role: "Business Owner",
+      content: "We localized our entire training library in 6 languages in just one week. This would have taken months and cost us over $50,000 traditionally.",
+      avatar: "👨🏿‍💼"
     }
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-br from-green-50 to-blue-50">
+    <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center bg-green-100 text-green-600 px-4 py-2 rounded-full text-sm font-medium mb-6">
-            ✨ The Solution You&apos;ve Been Waiting For
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              What our users say
+            </h2>
+            <p className="text-xl text-gray-600 leading-relaxed">
+              Real feedback from creators who transformed their content reach
+            </p>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            What Makes DubTitle <span className="text-green-600">Revolutionary?</span>
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            We&apos;ve solved every pain point in traditional dubbing with cutting-edge AI technology 
-            that delivers studio-quality results at breakthrough speed and pricing.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {features.map((feature, index) => (
-            <div key={index} className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-gray-100">
-              <div className="text-4xl mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">{feature.title}</h3>
-              <p className="text-gray-600 mb-4">{feature.description}</p>
-              <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-                <p className="text-green-700 text-sm font-medium">✓ {feature.benefit}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Comparison */}
-        <div className="bg-white rounded-3xl p-8 md:p-12 shadow-2xl max-w-6xl mx-auto">
-          <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">
-            Traditional Dubbing vs DubTitle
-          </h3>
           
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b-2 border-gray-200">
-                  <th className="text-left py-4 px-6 text-gray-600 font-medium">Feature</th>
-                  <th className="text-center py-4 px-6 text-red-600 font-medium">Traditional Studios</th>
-                  <th className="text-center py-4 px-6 text-green-600 font-medium">DubTitle</th>
-                </tr>
-              </thead>
-              <tbody className="text-sm">
-                <tr className="border-b border-gray-100">
-                  <td className="py-4 px-6 font-medium text-gray-900">Turnaround Time</td>
-                  <td className="py-4 px-6 text-center text-red-600">2-6 weeks</td>
-                  <td className="py-4 px-6 text-center text-green-600 font-bold">2-10 minutes</td>
-                </tr>
-                <tr className="border-b border-gray-100 bg-gray-50">
-                  <td className="py-4 px-6 font-medium text-gray-900">Cost per Video</td>
-                  <td className="py-4 px-6 text-center text-red-600">{formatPrice(convertPrice(100, currency), currency)}-{formatPrice(convertPrice(500, currency), currency)}+</td>
-                  <td className="py-4 px-6 text-center text-green-600 font-bold">{formatPrice(convertPrice(1, currency), currency)}-{formatPrice(convertPrice(10, currency), currency)}</td>
-                </tr>
-                <tr className="border-b border-gray-100">
-                  <td className="py-4 px-6 font-medium text-gray-900">Languages Available</td>
-                  <td className="py-4 px-6 text-center text-red-600">5-10 major ones</td>
-                  <td className="py-4 px-6 text-center text-green-600 font-bold">30 languages</td>
-                </tr>
-                <tr className="border-b border-gray-100 bg-gray-50">
-                  <td className="py-4 px-6 font-medium text-gray-900">Revisions</td>
-                  <td className="py-4 px-6 text-center text-red-600">{formatPrice(convertPrice(200, currency), currency)}+ each</td>
-                  <td className="py-4 px-6 text-center text-green-600 font-bold">Unlimited & Free</td>
-                </tr>
-                <tr className="border-b border-gray-100">
-                  <td className="py-4 px-6 font-medium text-gray-900">Voice Consistency</td>
-                  <td className="py-4 px-6 text-center text-red-600">Varies by actor</td>
-                  <td className="py-4 px-6 text-center text-green-600 font-bold">Always perfect</td>
-                </tr>
-                <tr className="bg-gray-50">
-                  <td className="py-4 px-6 font-medium text-gray-900">Availability</td>
-                  <td className="py-4 px-6 text-center text-red-600">Business hours only</td>
-                  <td className="py-4 px-6 text-center text-green-600 font-bold">24/7 instant</td>
-                </tr>
-              </tbody>
-            </table>
+          <div className="grid md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <div key={index} className="bg-white rounded-2xl p-8 shadow-lg">
+                <div className="flex items-center mb-6">
+                  <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mr-4 text-2xl">
+                    {testimonial.avatar}
+                  </div>
+                  <div>
+                    <div className="font-semibold text-gray-900">{testimonial.name}</div>
+                    <div className="text-gray-600 text-sm">{testimonial.role}</div>
+                  </div>
+                </div>
+                <p className="text-gray-700 italic leading-relaxed">
+                  "{testimonial.content}"
+                </p>
+              </div>
+            ))}
           </div>
-        </div>
 
-        {/* CTA */}
-        <div className="text-center mt-16">
-          <button className="group relative px-12 py-4 bg-gradient-to-r from-green-500 to-blue-500 text-white font-bold text-xl rounded-full hover:shadow-2xl hover:shadow-green-500/25 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1">
-            <span className="relative z-10">🚀 Start Dubbing Now</span>
-            <div className="absolute inset-0 bg-gradient-to-r from-green-600 to-blue-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          </button>
-          <p className="text-gray-600 mt-4">✅ No credit card required • ✅ 7-day free trial</p>
+          {/* Features */}
+          <div className="mt-20 grid md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">🔒</span>
+              </div>
+              <h3 className="font-semibold text-gray-900 mb-2">Secure & Private</h3>
+              <p className="text-gray-600">Your content is processed securely and deleted after processing</p>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">⚡</span>
+              </div>
+              <h3 className="font-semibold text-gray-900 mb-2">Lightning Fast</h3>
+              <p className="text-gray-600">Get your dubbed videos in minutes, not days or weeks</p>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">💎</span>
+              </div>
+              <h3 className="font-semibold text-gray-900 mb-2">Studio Quality</h3>
+              <p className="text-gray-600">Professional-grade results that sound natural and authentic</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   );
-} 
+}
