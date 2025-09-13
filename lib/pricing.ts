@@ -6,7 +6,9 @@ export interface PricingPlan {
   id: string;
   name: string;
   price: number;
+  priceINR: number;
   originalPrice?: number;
+  originalPriceINR?: number;
   duration: string;
   maxPerVideoMinutes: number;
   features: string[];
@@ -39,11 +41,30 @@ export const getCurrencySymbol = (currency: Currency): string => {
   return currency === 'INR' ? '₹' : '$';
 };
 
+export const getPriceForTimeRange = (plan: PricingPlan, currency: Currency): number => {
+  if (currency === 'INR') {
+    return plan.priceINR;
+  }
+  return plan.price;
+};
+
+export const getOriginalPriceForTimeRange = (plan: PricingPlan, currency: Currency): number | undefined => {
+  if (currency === 'INR' && plan.originalPriceINR) {
+    return plan.originalPriceINR;
+  }
+  return plan.originalPrice;
+};
+
+export const getCheckoutUrlForTimeRange = (plan: PricingPlan): string | undefined => {
+  return plan.checkoutUrl;
+};
+
 export const pricingPlans: PricingPlan[] = [
   {
     id: 'free',
     name: 'FREE',
     price: 0,
+    priceINR: 0,
     duration: '5 minutes of dubbing',
     maxPerVideoMinutes: 0.5,
     features: [
@@ -62,7 +83,9 @@ export const pricingPlans: PricingPlan[] = [
     id: 'starter',
     name: 'STARTER',
     price: 7,
+    priceINR: 630,
     originalPrice: 10,
+    originalPriceINR: 900,
     duration: '20 minutes of dubbing',
     maxPerVideoMinutes: 2,
     features: [
@@ -81,7 +104,9 @@ export const pricingPlans: PricingPlan[] = [
     id: 'professional',
     name: 'PROFESSIONAL',
     price: 25,
+    priceINR: 2250,
     originalPrice: 40,
+    originalPriceINR: 3600,
     duration: '90 minutes of dubbing',
     maxPerVideoMinutes: 10,
     features: [

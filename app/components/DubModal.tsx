@@ -799,7 +799,7 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
 
           {/* Time Range */}
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               Time range to dub
             </label>
             <div className="flex space-x-4">
@@ -809,7 +809,7 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
                   value={startTime}
                   onChange={(e) => setStartTime(e.target.value)}
                   onBlur={(e) => handleTimeInputBlur(e.target.value, setStartTime)}
-                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="00:00:00"
                 />
               </div>
@@ -819,7 +819,7 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
                   value={endTime}
                   onChange={(e) => setEndTime(e.target.value)}
                   onBlur={(e) => handleTimeInputBlur(e.target.value, setEndTime)}
-                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="00:00:00"
                 />
               </div>

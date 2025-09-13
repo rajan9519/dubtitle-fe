@@ -55,7 +55,7 @@ export default function LogoCloud() {
               <span className="ml-2 text-sm">Customer Satisfaction</span>
             </div>
             <div className="flex items-center">
-              <span className="text-2xl font-bold text-purple-600">500+</span>
+              <span className="text-2xl font-bold text-purple-600">200+</span>
               <span className="ml-2 text-sm">Minutes Dubbed</span>
             </div>
             <div className="flex items-center">

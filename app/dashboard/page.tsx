@@ -226,8 +226,8 @@ export default function Dashboard() {
     switch (status) {
       case 'completed':
         return (
-          <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-            <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
+            <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
@@ -251,8 +251,8 @@ export default function Dashboard() {
         );
       default: // queued
         return (
-          <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
-            <svg className="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center">
+            <svg className="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
@@ -307,11 +307,11 @@ export default function Dashboard() {
         {children}
         {showTooltip && (
           <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 z-50">
-            <div className="bg-gray-800 text-white text-xs rounded-lg px-3 py-2 shadow-lg border border-gray-600 max-w-xs">
+            <div className="bg-slate-800 text-white text-xs rounded-lg px-3 py-2 shadow-lg border border-slate-600 max-w-xs">
               <div className="whitespace-normal break-words">{status}</div>
               {/* Arrow */}
               <div className="absolute top-full left-1/2 transform -translate-x-1/2">
-                <div className="border-4 border-transparent border-t-gray-800"></div>
+                <div className="border-4 border-transparent border-t-slate-800"></div>
               </div>
             </div>
           </div>
@@ -323,13 +323,13 @@ export default function Dashboard() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'completed':
-        return 'text-green-600';
+        return 'text-emerald-600';
       case 'failed':
         return 'text-red-600';
       case 'processing':
         return 'text-blue-600';
       default:
-        return 'text-yellow-600';
+        return 'text-amber-600';
     }
   };
 
@@ -382,7 +382,7 @@ export default function Dashboard() {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="flex items-center space-x-3">
-          <svg className="w-6 h-6 text-gray-400 animate-spin" fill="none" viewBox="0 0 24 24">
+          <svg className="w-6 h-6 text-slate-400 animate-spin" fill="none" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
           </svg>
@@ -417,12 +417,12 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
-      <nav className="relative z-20 border-b border-gray-200 bg-white">
+      <nav className="relative z-20 border-b border-slate-200 bg-white">
         <div className="container mx-auto p-4 lg:p-6">
           <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center space-y-4 lg:space-y-0">
             {/* Logo and Title */}
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 lg:w-10 lg:h-10 bg-black rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 lg:w-10 lg:h-10 bg-slate-900 rounded-lg flex items-center justify-center">
                 <svg className="w-5 h-5 lg:w-6 lg:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                 </svg>
@@ -439,7 +439,7 @@ export default function Dashboard() {
               </div>
               
               {/* Credits Display */}
-              <div className="flex items-center space-x-2 lg:space-x-3 bg-gray-50 border border-gray-200 rounded-lg px-3 lg:px-4 py-2 order-1 sm:order-2 w-full sm:w-auto">
+              <div className="flex items-center space-x-2 lg:space-x-3 bg-slate-50 border border-slate-200 rounded-lg px-3 lg:px-4 py-2 order-1 sm:order-2 w-full sm:w-auto">
                 <div className="flex items-center space-x-2">
                   <svg className="w-4 h-4 lg:w-5 lg:h-5 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
@@ -456,13 +456,13 @@ export default function Dashboard() {
                           <span>{formatPlanName(usage.plan.name)} plan</span>
                           <span className="hidden sm:inline">{usage.usage_statistics.days_remaining_in_cycle} days left</span>
                         </div>
-                        <div className="w-24 sm:w-28 lg:w-32 bg-gray-200 rounded-full h-1.5 mt-1">
+                        <div className="w-24 sm:w-28 lg:w-32 bg-slate-200 rounded-full h-1.5 mt-1">
                           <div 
                             className={`h-1.5 rounded-full transition-all duration-300 ${
                               getCreditsPercentage(usage) > 50 
-                                ? 'bg-green-500' 
+                                ? 'bg-emerald-500' 
                                 : getCreditsPercentage(usage) > 20
-                                ? 'bg-yellow-500'
+                                ? 'bg-amber-500'
                                 : 'bg-red-500'
                             }`}
                             style={{ width: `${getCreditsPercentage(usage)}%` }}
@@ -478,7 +478,7 @@ export default function Dashboard() {
 
               <button
                 onClick={handleSignOut}
-                className="px-3 lg:px-4 py-2 bg-gray-100 border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-200 hover:text-gray-900 transition-colors text-sm lg:text-base order-2 sm:order-3"
+                className="px-3 lg:px-4 py-2 bg-slate-100 border border-slate-200 text-slate-700 rounded-lg hover:bg-slate-200 hover:text-slate-900 transition-colors text-sm lg:text-base order-2 sm:order-3"
               >
                 Sign Out
               </button>
@@ -488,7 +488,7 @@ export default function Dashboard() {
       </nav>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 lg:px-6 py-8 lg:py-12 bg-gray-50 min-h-screen">
+      <div className="container mx-auto px-4 lg:px-6 py-8 lg:py-12 bg-slate-50 min-h-screen">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6 lg:mb-8 space-y-4 lg:space-y-0">
@@ -499,7 +499,7 @@ export default function Dashboard() {
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-3 sm:space-y-0 sm:space-x-3 lg:space-x-4">
               <button
                 onClick={() => router.push('/pricing')}
-                className="px-4 sm:px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2 text-sm lg:text-base"
+                className="px-4 sm:px-6 py-3 bg-slate-600 text-white font-semibold rounded-lg hover:bg-slate-700 hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2 text-sm lg:text-base"
               >
                 <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
@@ -508,7 +508,7 @@ export default function Dashboard() {
               </button>
               <button
                 onClick={() => setShowDubModal(true)}
-                className="px-4 sm:px-6 py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2 text-sm lg:text-base"
+                className="px-4 sm:px-6 py-3 bg-slate-900 text-white font-semibold rounded-lg hover:bg-slate-800 hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2 text-sm lg:text-base"
               >
                 <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -519,11 +519,11 @@ export default function Dashboard() {
           </div>
 
           {/* Tasks Content */}
-          <div className="bg-white border border-gray-200 rounded-xl lg:rounded-2xl p-4 lg:p-8 shadow-sm">
+          <div className="bg-white border border-slate-200 rounded-xl lg:rounded-2xl p-4 lg:p-8 shadow-sm">
             {tasksLoading ? (
               <div className="flex items-center justify-center py-8 lg:py-12">
                 <div className="flex items-center space-x-3">
-                  <svg className="w-5 h-5 lg:w-6 lg:h-6 text-gray-400 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 lg:w-6 lg:h-6 text-slate-400 animate-spin" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
@@ -547,7 +547,7 @@ export default function Dashboard() {
                 <div className="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-4">
                   <button
                     onClick={() => fetchTasks()}
-                    className="px-6 lg:px-8 py-3 lg:py-4 bg-gray-100 border border-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-gray-200 transition-all duration-300 inline-flex items-center space-x-2 text-sm lg:text-base"
+                    className="px-6 lg:px-8 py-3 lg:py-4 bg-slate-100 border border-slate-200 text-slate-700 font-semibold rounded-lg hover:bg-slate-200 transition-all duration-300 inline-flex items-center space-x-2 text-sm lg:text-base"
                   >
                     <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -556,7 +556,7 @@ export default function Dashboard() {
                   </button>
                   <button
                     onClick={() => setShowDubModal(true)}
-                    className="px-6 lg:px-8 py-3 lg:py-4 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition-all duration-300 inline-flex items-center space-x-2 text-sm lg:text-base"
+                    className="px-6 lg:px-8 py-3 lg:py-4 bg-slate-900 text-white font-semibold rounded-lg hover:bg-slate-800 transition-all duration-300 inline-flex items-center space-x-2 text-sm lg:text-base"
                   >
                     <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -568,8 +568,8 @@ export default function Dashboard() {
             ) : tasks.length === 0 ? (
               // Empty state
               <div className="text-center py-8 lg:py-12">
-                <div className="w-16 h-16 lg:w-24 lg:h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 lg:mb-6">
-                  <svg className="w-8 h-8 lg:w-12 lg:h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-16 h-16 lg:w-24 lg:h-24 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 lg:mb-6">
+                  <svg className="w-8 h-8 lg:w-12 lg:h-12 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                   </svg>
                 </div>
@@ -581,7 +581,7 @@ export default function Dashboard() {
                 </p>
                 <button
                   onClick={() => setShowDubModal(true)}
-                  className="px-6 lg:px-8 py-3 lg:py-4 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition-all duration-300 inline-flex items-center space-x-2 text-sm lg:text-base"
+                  className="px-6 lg:px-8 py-3 lg:py-4 bg-slate-900 text-white font-semibold rounded-lg hover:bg-slate-800 transition-all duration-300 inline-flex items-center space-x-2 text-sm lg:text-base"
                 >
                   <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -593,7 +593,7 @@ export default function Dashboard() {
               // Tasks list
               <div className="space-y-3 lg:space-y-4">
                 {tasks.map((task) => (
-                  <div key={task.id} className="bg-gray-50 border border-gray-200 rounded-lg lg:rounded-xl p-4 lg:p-6 hover:bg-gray-100 hover:shadow-md transition-all duration-300 hover:border-gray-300">
+                  <div key={task.id} className="bg-slate-50 border border-slate-200 rounded-lg lg:rounded-xl p-4 lg:p-6 hover:bg-slate-100 hover:shadow-md transition-all duration-300 hover:border-slate-300">
                     <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 lg:gap-6">
                       {/* Main Content */}
                       <div className="flex items-start space-x-3 lg:space-x-4 flex-1 min-w-0">
@@ -631,13 +631,13 @@ export default function Dashboard() {
                           {/* Mobile Progress Bar */}
                           {task.status === 'processing' && (
                             <div className="lg:hidden flex items-center space-x-3 mb-3">
-                              <div className="flex-1 bg-gray-200 rounded-full h-2">
+                              <div className="flex-1 bg-slate-200 rounded-full h-2">
                                 <div 
                                   className="bg-blue-500 h-2 rounded-full transition-all duration-300"
                                   style={{ width: `${task.progress}%` }}
                                 ></div>
                               </div>
-                              <span className="text-xs text-gray-500 min-w-[3rem] text-right">{task.progress}%</span>
+                              <span className="text-xs text-slate-500 min-w-[3rem] text-right">{task.progress}%</span>
                             </div>
                           )}
 
@@ -645,7 +645,7 @@ export default function Dashboard() {
                           {task.status === 'completed' && task.output_video_url && (
                             <button 
                               onClick={() => handleDownloadVideo(task)}
-                              className="lg:hidden w-full sm:w-auto px-4 py-2 bg-green-600 text-white text-xs font-semibold rounded-lg hover:bg-green-700 hover:shadow-lg transition-all duration-300 cursor-pointer flex items-center justify-center space-x-2"
+                              className="lg:hidden w-full sm:w-auto px-4 py-2 bg-emerald-600 text-white text-xs font-semibold rounded-lg hover:bg-emerald-700 hover:shadow-lg transition-all duration-300 cursor-pointer flex items-center justify-center space-x-2"
                             >
                               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -665,19 +665,19 @@ export default function Dashboard() {
                         </div>
                         {task.status === 'processing' && (
                           <div className="flex items-center space-x-3">
-                            <div className="w-24 bg-gray-200 rounded-full h-2">
+                            <div className="w-24 bg-slate-200 rounded-full h-2">
                               <div 
                                 className="bg-blue-500 h-2 rounded-full transition-all duration-300"
                                 style={{ width: `${task.progress}%` }}
                               ></div>
                             </div>
-                            <span className="text-xs text-gray-500 min-w-[3rem] text-right">{task.progress}%</span>
+                            <span className="text-xs text-slate-500 min-w-[3rem] text-right">{task.progress}%</span>
                           </div>
                         )}
                         {task.status === 'completed' && task.output_video_url && (
                           <button 
                             onClick={() => handleDownloadVideo(task)}
-                            className="px-6 py-2 bg-green-600 text-white text-sm font-semibold rounded-lg hover:bg-green-700 hover:shadow-lg transition-all duration-300 cursor-pointer flex items-center space-x-2"
+                            className="px-6 py-2 bg-emerald-600 text-white text-sm font-semibold rounded-lg hover:bg-emerald-700 hover:shadow-lg transition-all duration-300 cursor-pointer flex items-center space-x-2"
                           >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />

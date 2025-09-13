@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from 'react';
 import ContactForm from './ContactForm';
 
 interface ContactModalProps {

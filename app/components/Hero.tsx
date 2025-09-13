@@ -85,18 +85,9 @@ export default function Hero() {
               router.push('/login');
             }}
             disabled={loginLoading}
-            className="text-gray-700 hover:text-black transition-colors font-medium disabled:opacity-50"
+            className="text-gray-700 hover:text-black transition-colors font-medium disabled:opacity-50 cursor-pointer"
           >
             {loginLoading ? 'Loading...' : 'Sign in'}
-          </button>
-          <button
-            onClick={() => {
-              trackButtonClick('Contact Sales', 'Hero Navigation');
-              router.push('/contact');
-            }}
-            className="px-4 py-2 border border-gray-300 text-gray-700 font-medium rounded-lg hover:border-gray-400 hover:text-black transition-colors"
-          >
-            Contact Sales
           </button>
           <button
             onClick={() => {
@@ -106,9 +97,18 @@ export default function Hero() {
               router.push('/signup');
             }}
             disabled={loginLoading}
-            className="px-4 py-2 bg-black text-white font-medium rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50"
+            className="px-4 py-2 bg-black text-white font-medium rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 cursor-pointer"
           >
             {loginLoading ? 'Loading...' : 'Sign up'}
+          </button>
+          <button
+            onClick={() => {
+              trackButtonClick('Contact Sales', 'Hero Navigation');
+              router.push('/contact');
+            }}
+            className="px-4 py-2 border border-gray-300 text-gray-700 font-medium rounded-lg hover:border-gray-400 hover:text-black transition-colors cursor-pointer"
+          >
+            Contact Sales
           </button>
         </div>
         
@@ -263,15 +263,15 @@ export default function Hero() {
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
-              <div className="text-3xl font-bold text-gray-900 mb-2">30+</div>
+              <div className="text-3xl font-bold text-gray-900 mb-2">29</div>
               <div className="text-gray-600">Languages supported</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-gray-900 mb-2">500+</div>
+              <div className="text-3xl font-bold text-gray-900 mb-2">200+</div>
               <div className="text-gray-600">Videos dubbed</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-gray-900 mb-2">2min</div>
+              <div className="text-3xl font-bold text-gray-900 mb-2">3min</div>
               <div className="text-gray-600">Average processing time</div>
             </div>
             <div>

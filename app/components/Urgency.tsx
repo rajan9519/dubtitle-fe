@@ -2,19 +2,17 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { pricingPlans, convertPrice, formatPrice, TimeRange, getPriceForTimeRange, getOriginalPriceForTimeRange } from '../../lib/pricing';
+import { pricingPlans, formatPrice, getPriceForTimeRange, getOriginalPriceForTimeRange } from '../../lib/pricing';
 import { trackButtonClick } from './GoogleAnalytics';
 import { useCurrency } from '../../lib/currency-context';
 import CurrencyToggle from './CurrencyToggle';
-import TimeRangeToggle from './TimeRangeToggle';
 
 export default function Pricing() {
   const router = useRouter();
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
-  const [timeRange, setTimeRange] = useState<TimeRange>('monthly');
   const { currency } = useCurrency();
 
-  const handlePlanAction = async (plan: any) => {
+  const handlePlanAction = async (plan: { id: string; name: string; buttonAction: string }) => {
     if (loadingPlan) return;
     
     setLoadingPlan(plan.id);
@@ -42,11 +40,10 @@ export default function Pricing() {
             Simple, transparent pricing
           </h2>
           <p className="text-xl text-gray-600 leading-relaxed mb-8">
-            Choose the plan that fits your needs. Start free, upgrade when you're ready.
+            Choose the plan that fits your needs. Start free, upgrade when you are ready.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8">
-            <CurrencyToggle />
-            <TimeRangeToggle timeRange={timeRange} setTimeRange={setTimeRange} />
+            <CurrencyToggle variant='light'/>
           </div>
         </div>
 
@@ -74,15 +71,15 @@ export default function Pricing() {
                 
                 <div className="mb-6">
                   <div className="text-4xl font-bold text-gray-900">
-                    {getOriginalPriceForTimeRange(plan, timeRange) && (
+                    {getOriginalPriceForTimeRange(plan, currency) && (
                       <span className="text-2xl line-through mr-2 text-gray-500">
-                        {formatPrice(convertPrice(getOriginalPriceForTimeRange(plan, timeRange)!, currency), currency)}
+                        {formatPrice(getOriginalPriceForTimeRange(plan, currency)!, currency)}
                       </span>
                     )}
-                    <span>{formatPrice(convertPrice(getPriceForTimeRange(plan, timeRange), currency), currency)}</span>
+                    <span>{formatPrice(getPriceForTimeRange(plan, currency), currency)}</span>
                   </div>
                   <div className="text-sm text-gray-600">
-                    {plan.duration} {timeRange === 'yearly' ? '/ year' : '/ month'}
+                    {plan.duration} {'/ month'}
                   </div>
                 </div>
                 

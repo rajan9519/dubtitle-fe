@@ -3,16 +3,14 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getUser, User, redirectToLogin, isAuthenticated } from '../../lib/auth';
-import { pricingPlans, PricingPlan, convertPrice, formatPrice, TimeRange, getPriceForTimeRange, getOriginalPriceForTimeRange, getCheckoutUrlForTimeRange } from '../../lib/pricing';
+import { pricingPlans, PricingPlan, formatPrice, getPriceForTimeRange, getOriginalPriceForTimeRange, getCheckoutUrlForTimeRange } from '../../lib/pricing';
 import { useCurrency } from '../../lib/currency-context';
 import CurrencyToggle from '../components/CurrencyToggle';
-import TimeRangeToggle from '../components/TimeRangeToggle';
 
 export default function PricingPage() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [processingPlan, setProcessingPlan] = useState<string | null>(null);
-  const [timeRange, setTimeRange] = useState<TimeRange>('monthly');
   const { currency } = useCurrency();
   const router = useRouter();
 
@@ -52,7 +50,7 @@ export default function PricingPage() {
         }
         
         // User is authenticated, proceed directly to LemonSqueezy
-        const checkoutUrlString = getCheckoutUrlForTimeRange(plan, timeRange);
+        const checkoutUrlString = getCheckoutUrlForTimeRange(plan);
         if (!checkoutUrlString) {
           alert('Checkout URL not configured. Please contact support.');
           setProcessingPlan(null);
@@ -142,8 +140,7 @@ export default function PricingPage() {
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8">
-              <CurrencyToggle />
-              <TimeRangeToggle timeRange={timeRange} setTimeRange={setTimeRange} />
+              <CurrencyToggle variant="light"/>
             </div>
           </div>
 
@@ -170,18 +167,18 @@ export default function PricingPage() {
                 </div>
                 
                 <div className={`text-4xl font-bold mb-4 ${plan.popular ? 'text-gray-900' : 'text-gray-900'}`}>
-                  {getOriginalPriceForTimeRange(plan, timeRange) && (
+                  {getOriginalPriceForTimeRange(plan, currency) && (
                     <span className={`line-through mr-2 ${plan.popular ? 'text-gray-500' : 'text-gray-500'}`}>
-                      {formatPrice(convertPrice(getOriginalPriceForTimeRange(plan, timeRange)!, currency), currency)}
+                      {formatPrice(getOriginalPriceForTimeRange(plan, currency)!, currency)}
                     </span>
                   )}
                   <span className={plan.popular ? 'text-gray-900' : 'text-gray-900'}>
-                    {formatPrice(convertPrice(getPriceForTimeRange(plan, timeRange), currency), currency)}
+                    {formatPrice(getPriceForTimeRange(plan, currency), currency)}
                   </span>
                 </div>
                 
                 <div className={`mb-6 ${plan.popular ? 'text-gray-600' : 'text-gray-600'}`}>
-                  {plan.duration} {timeRange === 'yearly' ? '/ year' : '/ month'}
+                  {plan.duration} {'/ month'}
                 </div>
                 
                 <ul className="space-y-3 mb-8 text-left flex-grow">

@@ -17,7 +17,7 @@ export default function ProblemStatement() {
     },
     {
       icon: "🌍",
-      title: "30+ languages",
+      title: "29 languages",
       description: "Expand your reach globally with support for major world languages and regional dialects."
     }
   ];

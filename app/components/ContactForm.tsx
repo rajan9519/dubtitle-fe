@@ -3,8 +3,6 @@
 import { useState } from 'react';
 import { trackFormSubmission } from './GoogleAnalytics';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://dubtitle.com/api';
-
 interface ContactFormProps {
   title?: string;
   description?: string;
@@ -83,7 +81,7 @@ export default function ContactForm({
             Message Sent Successfully! 🎉
           </h3>
           <p className={`mb-6 ${variant === 'modal' ? 'text-gray-300' : 'text-gray-600'}`}>
-            Thank you for contacting us! We'll get back to you within 24 hours.
+            Thank you for contacting us! We&apos;ll get back to you within 24 hours.
           </p>
           <button
             onClick={() => {

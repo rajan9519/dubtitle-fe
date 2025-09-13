@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { trackFormSubmission, trackButtonClick } from '../components/GoogleAnalytics';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://dubtitle.com/api';
+
 export default function EarlyAccess() {
   const router = useRouter();
   const [email, setEmail] = useState('');
@@ -17,7 +19,7 @@ export default function EarlyAccess() {
     setError('');
     
     try {
-      const response = await fetch('https://api.subgen.in/contact-us', {
+      const response = await fetch(`${API_BASE_URL}/contact-us`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

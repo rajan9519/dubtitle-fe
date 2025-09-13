@@ -1,7 +1,6 @@
 import Hero from "./components/Hero";
 import ProblemStatement from "./components/ProblemStatement";
 import ValueProposition from "./components/ValueProposition";
-import SocialProof from "./components/SocialProof";
 import HowItWorks from "./components/HowItWorks";
 import FAQ from "./components/FAQ";
 import Urgency from "./components/Urgency";
@@ -16,7 +15,7 @@ export default function Home() {
       <ProblemStatement />
       <ValueProposition />
       <HowItWorks />
-      <SocialProof />
+      {/* <SocialProof /> */}
       {/* <TeamSection /> */}
       <Urgency />
       <FAQ />
