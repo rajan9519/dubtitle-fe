@@ -1,174 +1,109 @@
-'use client';
-
-import { useState } from 'react';
-
 export default function HowItWorks() {
-  const [activeStep, setActiveStep] = useState(0);
-  
   const steps = [
     {
-      icon: "📤",
-      title: "Upload Your Video",
-      description: "Drag & drop or select your video file. We support MP4, MOV, AVI and more.",
-      details: "Our AI instantly analyzes your video's audio track, identifies speakers, and prepares for translation.",
-      image: "🎬"
+      number: "01",
+      title: "Upload your video",
+      description: "Simply drag and drop your video file or paste a YouTube link. We support all major formats.",
+      icon: "📤"
     },
     {
-      icon: "🌍",
-      title: "Choose Target Language",
-      description: "Select from 30 languages with native-quality AI voices.",
-      details: "Pick the perfect voice tone, accent, and style that matches your content's personality.",
-      image: "🗣️"
+      number: "02", 
+      title: "Choose target language",
+      description: "Select from 30+ languages. Our AI analyzes the speech patterns and emotional context.",
+      icon: "🌍"
     },
     {
-      icon: "🤖",
-      title: "AI Magic Happens",
-      description: "Our advanced AI translates, synchronizes, and generates natural speech.",
-      details: "Advanced lip-sync technology ensures perfect mouth movement matching.",
-      image: "⚡"
+      number: "03",
+      title: "AI processes your content", 
+      description: "Advanced AI creates natural-sounding dubbing while maintaining lip-sync and emotion.",
+      icon: "🤖"
     },
     {
-      icon: "🎯",
-      title: "Review & Download",
-      description: "Preview your dubbed video and make any adjustments needed.",
-      details: "Download in HD quality, ready to upload to any platform instantly.",
-      image: "🎉"
+      number: "04",
+      title: "Download & share",
+      description: "Get your dubbed video in minutes, ready to publish across all platforms.",
+      icon: "🎯"
     }
   ];
 
   return (
-    <section id="features" className="py-20 bg-white">
+    <section className="py-20 bg-white" id="features">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center bg-blue-100 text-blue-600 px-4 py-2 rounded-full text-sm font-medium mb-6">
-            🛠️ How It Works
-          </div>
+        <div className="max-w-4xl mx-auto text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            From Upload to Global Reach in <span className="text-blue-600">4 Simple Steps</span>
+            How it works
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Our streamlined process makes professional dubbing accessible to everyone. 
-            No technical skills required – just upload and go global.
+          <p className="text-xl text-gray-600 leading-relaxed">
+            From upload to download in just 4 simple steps. No technical expertise required.
           </p>
         </div>
 
-        {/* Interactive Steps */}
         <div className="max-w-6xl mx-auto">
-          {/* Step Navigation */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            {steps.map((step, index) => (
-              <button
-                key={index}
-                onClick={() => setActiveStep(index)}
-                className={`flex items-center space-x-3 px-6 py-4 rounded-xl transition-all duration-300 ${
-                  activeStep === index
-                    ? 'bg-blue-500 text-white shadow-lg scale-105'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                <span className="text-2xl">{step.icon}</span>
-                <span className="font-medium">Step {index + 1}</span>
-              </button>
-            ))}
-          </div>
-
-          {/* Active Step Details */}
-          <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-3xl p-8 md:p-12">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div>
-                <div className="flex items-center mb-6">
-                  <div className="w-16 h-16 bg-blue-500 rounded-2xl flex items-center justify-center mr-4">
-                    <span className="text-3xl">{steps[activeStep].icon}</span>
-                  </div>
-                  <div>
-                    <div className="text-sm text-blue-600 font-medium mb-1">STEP {activeStep + 1}</div>
-                    <h3 className="text-3xl font-bold text-gray-900">{steps[activeStep].title}</h3>
-                  </div>
-                </div>
-                
-                <p className="text-xl text-gray-700 mb-6 leading-relaxed">
-                  {steps[activeStep].description}
-                </p>
-                
-                <p className="text-gray-600 mb-8">
-                  {steps[activeStep].details}
-                </p>
-
-                {/* Progress indicators */}
-                <div className="flex items-center space-x-2">
-                  {steps.map((_, index) => (
-                    <div
-                      key={index}
-                      className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                        index <= activeStep ? 'bg-blue-500' : 'bg-gray-300'
-                      }`}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              <div className="relative">
-                <div className="bg-white rounded-2xl p-8 shadow-2xl">
-                  <div className="text-center">
-                    <div className="text-8xl mb-4">{steps[activeStep].image}</div>
-                    <div className="bg-gray-100 rounded-xl p-6">
-                      <div className="text-sm text-gray-600 mb-2">Processing...</div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
-                        <div 
-                          className="bg-blue-500 h-2 rounded-full transition-all duration-1000"
-                          style={{ width: `${((activeStep + 1) / steps.length) * 100}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* All Steps Overview */}
-          <div className="grid md:grid-cols-4 gap-6 mt-16">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {steps.map((step, index) => (
               <div key={index} className="text-center">
-                <div className="w-20 h-20 bg-gradient-to-br from-blue-400 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                  <span className="text-3xl">{step.icon}</span>
+                <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <span className="text-2xl">{step.icon}</span>
                 </div>
-                <h4 className="text-lg font-bold text-gray-900 mb-2">{step.title}</h4>
-                <p className="text-gray-600 text-sm">{step.description}</p>
+                <div className="text-sm font-medium text-blue-600 mb-2">{step.number}</div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">{step.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{step.description}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Time Comparison */}
-        <div className="bg-gradient-to-r from-green-500 to-blue-500 rounded-3xl p-8 md:p-12 mt-16 text-white text-center">
-          <h3 className="text-3xl font-bold mb-6">⏱️ Time Comparison</h3>
+        {/* Comparison Section */}
+        <div className="max-w-4xl mx-auto mt-20">
+          <h3 className="text-3xl font-bold text-gray-900 text-center mb-12">Why choose DubTitle?</h3>
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6">
-              <h4 className="text-xl font-bold mb-4 text-red-200">Traditional Method</h4>
-              <div className="space-y-2 text-left">
-                <div>📞 Contact studios: 2-3 days</div>
-                <div>💰 Get quotes: 1-2 days</div>
-                <div>🎭 Find voice actors: 3-5 days</div>
-                <div>🎬 Recording: 5-10 days</div>
-                <div>✂️ Editing & sync: 7-14 days</div>
-              </div>
-              <div className="border-t border-white/30 mt-4 pt-4">
-                <div className="text-2xl font-bold text-red-200">18-34 days total</div>
+            <div className="bg-red-50 border border-red-200 rounded-2xl p-8">
+              <h4 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                <span className="text-red-500 mr-3">❌</span>
+                Traditional dubbing
+              </h4>
+              <div className="space-y-4 text-gray-700">
+                <div className="flex items-center">
+                  <span className="text-red-500 mr-3">•</span>
+                  <span>2-4 weeks production time</span>
+                </div>
+                <div className="flex items-center">
+                  <span className="text-red-500 mr-3">•</span>
+                  <span>$500-5000+ per video</span>
+                </div>
+                <div className="flex items-center">
+                  <span className="text-red-500 mr-3">•</span>
+                  <span>Complex coordination required</span>
+                </div>
+                <div className="flex items-center">
+                  <span className="text-red-500 mr-3">•</span>
+                  <span>Limited language options</span>
+                </div>
               </div>
             </div>
             
-            <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6">
-              <h4 className="text-xl font-bold mb-4 text-green-200">DubTitle</h4>
-              <div className="space-y-2 text-left">
-                <div>📤 Upload video: 30 seconds</div>
-                <div>🌍 Select language: 10 seconds</div>
-                <div>🤖 AI processing: 2-10 minutes</div>
-                <div>🎯 Review & download: 2 minutes</div>
-                <div>🎉 Ready to publish: Instantly</div>
-              </div>
-              <div className="border-t border-white/30 mt-4 pt-4">
-                <div className="text-2xl font-bold text-green-200">5-10 minutes total</div>
+            <div className="bg-green-50 border border-green-200 rounded-2xl p-8">
+              <h4 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                <span className="text-green-500 mr-3">✅</span>
+                DubTitle AI
+              </h4>
+              <div className="space-y-4 text-gray-700">
+                <div className="flex items-center">
+                  <span className="text-green-500 mr-3">•</span>
+                  <span>2-10 minutes processing</span>
+                </div>
+                <div className="flex items-center">
+                  <span className="text-green-500 mr-3">•</span>
+                  <span>Starting from ₹649/month</span>
+                </div>
+                <div className="flex items-center">
+                  <span className="text-green-500 mr-3">•</span>
+                  <span>One-click solution</span>
+                </div>
+                <div className="flex items-center">
+                  <span className="text-green-500 mr-3">•</span>
+                  <span>30+ languages available</span>
+                </div>
               </div>
             </div>
           </div>
@@ -176,4 +111,4 @@ export default function HowItWorks() {
       </div>
     </section>
   );
-} 
+}

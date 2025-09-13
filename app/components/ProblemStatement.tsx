@@ -1,108 +1,80 @@
 export default function ProblemStatement() {
-  const problems = [
+  const features = [
     {
-      icon: "⏰",
-      title: "Weeks of Waiting",
-      description: "Traditional dubbing takes 2-6 weeks minimum",
-      example: "Your viral video loses momentum while waiting for translation"
+      icon: "🎯",
+      title: "Voice cloning technology",
+      description: "Our AI preserves the original speaker's voice characteristics, tone, and emotion across languages."
     },
     {
-      icon: "💸",
-      title: "Sky-High Costs",
-      description: "$100-500+ per video for professional dubbing",
-      example: "Small creators can't afford professional voice actors"
+      icon: "🔄",
+      title: "Natural speech patterns",
+      description: "Advanced algorithms maintain natural rhythm and flow for authentic-sounding results."
     },
     {
-      icon: "🎭",
-      title: "Inconsistent Quality",
-      description: "Voice actors may not match your content's tone",
-      example: "Energetic content dubbed with monotone voices"
+      icon: "⚡",
+      title: "Lightning fast",
+      description: "What takes traditional studios weeks, we accomplish in minutes with cutting-edge AI processing."
     },
     {
       icon: "🌍",
-      title: "Limited Reach",
-      description: "Miss out on 75% of global audience",
-      example: "English-only content excludes billions of potential viewers"
+      title: "30+ languages",
+      description: "Expand your reach globally with support for major world languages and regional dialects."
     }
   ];
 
   return (
-    <section className="py-20 bg-red-50">
+    <section className="py-20 bg-white">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center bg-red-100 text-red-600 px-4 py-2 rounded-full text-sm font-medium mb-6">
-            🚨 The Current Reality
-          </div>
+        <div className="max-w-4xl mx-auto text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Content Creators Are <span className="text-red-600">Struggling</span>
+            Powered by breakthrough AI
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            While your content could reach billions globally, language barriers and traditional dubbing limitations 
-            are keeping you stuck with local audiences.
+          <p className="text-xl text-gray-600 leading-relaxed">
+            Our advanced AI technology delivers studio-quality dubbing that preserves emotion 
+            and sounds completely natural.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-          {problems.map((problem, index) => (
-            <div key={index} className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-              <div className="text-4xl mb-4">{problem.icon}</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">{problem.title}</h3>
-              <p className="text-gray-600 mb-4 font-medium">{problem.description}</p>
-              <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded">
-                <p className="text-red-700 text-sm italic">&quot;{problem.example}&quot;</p>
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {features.map((feature, index) => (
+            <div key={index} className="text-center">
+              <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <span className="text-2xl">{feature.icon}</span>
               </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">{feature.title}</h3>
+              <p className="text-gray-600 leading-relaxed">{feature.description}</p>
             </div>
           ))}
         </div>
 
-        {/* Real scenario */}
-        <div className="bg-white rounded-3xl p-12 shadow-2xl max-w-4xl mx-auto">
-          <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Sound Familiar?</h3>
-          </div>
-          
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="bg-gray-100 rounded-2xl p-6 mb-6">
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
-                    <span className="text-blue-600 font-bold">JM</span>
-                  </div>
-                  <div>
-                    <div className="font-semibold text-gray-900">James Miller</div>
-                    <div className="text-gray-600 text-sm">YouTube Creator, 500K subscribers</div>
-                  </div>
-                </div>
-                <p className="text-gray-700 italic">
-                  &quot;I created an amazing tutorial that went viral in English. But I&apos;m missing out on 
-                  Spanish, French, and German audiences. Professional dubbing costs more than I make 
-                  from the video!&quot;
-                </p>
+        {/* Use Cases */}
+        <div className="max-w-4xl mx-auto mt-20">
+          <h3 className="text-3xl font-bold text-gray-900 text-center mb-12">Perfect for</h3>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">🎬</span>
               </div>
+              <h4 className="text-lg font-semibold text-gray-900 mb-2">Content Creators</h4>
+              <p className="text-gray-600">YouTubers, TikTokers, and social media influencers expanding globally</p>
             </div>
-            
-            <div>
-              <div className="bg-red-50 rounded-2xl p-6">
-                <h4 className="font-bold text-red-900 mb-4">The Hard Truth:</h4>
-                <ul className="space-y-3 text-red-800">
-                  <li className="flex items-start">
-                    <span className="text-red-500 mr-2">•</span>
-                    <span>75% of internet users don&apos;t speak English as first language</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-red-500 mr-2">•</span>
-                    <span>Multilingual content gets 3x more engagement</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-red-500 mr-2">•</span>
-                    <span>You&apos;re leaving money on the table every day</span>
-                  </li>
-                </ul>
+            <div className="text-center">
+              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">🏢</span>
               </div>
+              <h4 className="text-lg font-semibold text-gray-900 mb-2">Businesses</h4>
+              <p className="text-gray-600">Companies creating multilingual marketing and training content</p>
+            </div>
+            <div className="text-center">
+              <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">🎓</span>
+              </div>
+              <h4 className="text-lg font-semibold text-gray-900 mb-2">Educators</h4>
+              <p className="text-gray-600">Teachers and trainers making content accessible worldwide</p>
             </div>
           </div>
         </div>
       </div>
     </section>
   );
-} 
+}

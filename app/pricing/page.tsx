@@ -77,45 +77,45 @@ export default function PricingPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-500 via-purple-600 to-pink-600 flex items-center justify-center">
-        <div className="text-white text-xl">Loading...</div>
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-gray-900 text-xl">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-500 via-purple-600 to-pink-600 text-white relative overflow-hidden">
+    <div className="min-h-screen bg-white text-gray-900 relative">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-20 -right-20 w-40 h-40 bg-white/10 rounded-full animate-pulse"></div>
-        <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-white/5 rounded-full animate-pulse animation-delay-2000"></div>
+        <div className="absolute -top-20 -right-20 w-40 h-40 bg-gray-100 rounded-full animate-pulse"></div>
+        <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-gray-50 rounded-full animate-pulse animation-delay-2000"></div>
       </div>
 
       {/* Navigation */}
-      <nav className="flex items-center justify-between p-6 relative z-10">
-        <div className="flex items-center space-x-2">
-          <div className="w-10 h-10 bg-gradient-to-br from-purple-400 to-pink-400 rounded-lg flex items-center justify-center">
-            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <nav className="relative z-20 container mx-auto p-6 flex justify-between items-center">
+        <div className="flex items-center space-x-3">
+          <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
+            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
             </svg>
           </div>
-          <span className="text-white text-2xl font-bold">DubTitle</span>
+          <span className="text-black text-xl font-semibold">DubTitle</span>
         </div>
         <div className="flex items-center space-x-4">
           {user ? (
             <>
               <button
                 onClick={() => router.push('/dashboard')}
-                className="text-white hover:text-purple-300 transition-colors"
+                className="text-gray-700 hover:text-black transition-colors font-medium"
               >
                 Dashboard
               </button>
-              <span className="text-red-200">Welcome, {user.email}</span>
+              <span className="text-gray-600">Welcome, {user.email}</span>
             </>
           ) : (
             <button
               onClick={() => router.push('/')}
-              className="text-white hover:text-purple-300 transition-colors"
+              className="text-gray-700 hover:text-black transition-colors font-medium"
             >
               ← Back to Home
             </button>
@@ -127,10 +127,10 @@ export default function PricingPage() {
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
               Choose Your Plan
             </h1>
-            <p className="text-xl text-red-100 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Unlock the power of AI dubbing with our flexible pricing plans. 
               From getting started to scaling your business, we have the perfect plan for you.
             </p>
@@ -143,47 +143,47 @@ export default function PricingPage() {
                 key={plan.id}
                 className={`
                   ${plan.popular 
-                    ? 'bg-gradient-to-br from-yellow-400 to-orange-500 rounded-3xl p-8 text-center relative transform scale-105 shadow-2xl flex flex-col' 
-                    : 'bg-white/10 backdrop-blur-sm border border-white/20 rounded-3xl p-8 text-center flex flex-col'
+                    ? 'bg-white text-gray-900 rounded-3xl p-8 text-center relative transform scale-105 shadow-2xl flex flex-col border-4 border-black' 
+                    : 'bg-white border border-gray-200 rounded-3xl p-8 text-center flex flex-col shadow-lg'
                   }
                 `}
               >
                 {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded-full text-sm font-bold">
-                    🔥 MOST POPULAR
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-bold">
+                    Most popular
                   </div>
                 )}
                 
-                <div className={`text-lg font-medium mb-2 ${plan.popular ? 'text-orange-900 mt-4' : 'text-red-200'}`}>
+                <div className={`text-lg font-medium mb-2 ${plan.popular ? 'text-gray-700 mt-4' : 'text-gray-700'}`}>
                   {plan.name}
                 </div>
                 
-                <div className={`text-4xl font-bold mb-4 ${plan.popular ? 'text-white' : ''}`}>
+                <div className={`text-4xl font-bold mb-4 ${plan.popular ? 'text-gray-900' : 'text-gray-900'}`}>
                   {plan.originalPrice && (
-                    <span className={`line-through mr-2 ${plan.popular ? 'text-orange-200' : 'text-red-300'}`}>
+                    <span className={`line-through mr-2 ${plan.popular ? 'text-gray-500' : 'text-gray-500'}`}>
                       ${plan.originalPrice}
                     </span>
                   )}
-                  <span className={plan.popular ? '' : 'text-yellow-300'}>
+                  <span className={plan.popular ? 'text-gray-900' : 'text-gray-900'}>
                     ${plan.price}
                   </span>
                 </div>
                 
-                <div className={`mb-6 ${plan.popular ? 'text-orange-100' : 'text-red-100'}`}>
+                <div className={`mb-6 ${plan.popular ? 'text-gray-600' : 'text-gray-600'}`}>
                   {plan.duration}
                 </div>
                 
                 <ul className="space-y-3 mb-8 text-left flex-grow">
                   {plan.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-center">
-                      <span className={`mr-2 ${plan.popular ? 'text-green-600' : 'text-green-400'}`}>✓</span>
-                      <span>{feature}</span>
+                      <span className={`mr-2 ${plan.popular ? 'text-green-500' : 'text-green-500'}`}>✓</span>
+                      <span className={plan.popular ? 'text-gray-700' : 'text-gray-700'}>{feature}</span>
                     </li>
                   ))}
                   {plan.warningFeatures?.map((feature, featureIndex) => (
                     <li key={`warning-${featureIndex}`} className="flex items-center">
-                      <span className="text-red-400 mr-2">⚠</span>
-                      <span>{feature}</span>
+                      <span className="text-orange-500 mr-2">⚠</span>
+                      <span className={plan.popular ? 'text-gray-700' : 'text-gray-700'}>{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -192,11 +192,11 @@ export default function PricingPage() {
                   onClick={() => handlePlanSelect(plan)}
                   disabled={processingPlan === plan.id}
                   className={`
-                    w-full py-4 font-bold rounded-xl transition-all duration-300 mt-auto cursor-pointer
+                    w-full py-4 font-bold rounded-lg transition-all duration-300 mt-auto cursor-pointer
                     disabled:opacity-70 disabled:cursor-not-allowed
                     ${plan.popular 
-                      ? 'bg-white text-orange-600 hover:bg-gray-100 disabled:hover:bg-white' 
-                      : 'bg-white text-purple-600 hover:bg-gray-100 disabled:hover:bg-white'
+                      ? 'bg-black text-white hover:bg-gray-800 disabled:hover:bg-black' 
+                      : 'bg-black text-white hover:bg-gray-800 disabled:hover:bg-black'
                     }
                   `}
                 >
@@ -220,45 +220,53 @@ export default function PricingPage() {
           <div className="text-center">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12">
               <div className="text-center">
-                <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <p className="text-white font-semibold">30-Day Money Back</p>
-                <p className="text-red-200 text-sm">Risk-free guarantee</p>
+                <p className="text-gray-900 font-semibold">30-Day Money Back</p>
+                <p className="text-gray-600 text-sm">Risk-free guarantee</p>
               </div>
               <div className="text-center">
-                <div className="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
                 </div>
-                <p className="text-white font-semibold">Secure Payments</p>
-                <p className="text-red-200 text-sm">Powered by LemonSqueezy</p>
+                <p className="text-gray-900 font-semibold">Secure Payments</p>
+                <p className="text-gray-600 text-sm">Powered by LemonSqueezy</p>
               </div>
               <div className="text-center">
-                <div className="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M12 6v6m0 0v6m6-6H6" />
                   </svg>
                 </div>
-                <p className="text-white font-semibold">Cancel Anytime</p>
-                <p className="text-red-200 text-sm">No long-term commitment</p>
+                <p className="text-gray-900 font-semibold">Cancel Anytime</p>
+                <p className="text-gray-600 text-sm">No long-term commitment</p>
               </div>
             </div>
             
-            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-3xl p-8 max-w-2xl mx-auto">
-              <p className="text-red-100 leading-relaxed">
-                Need custom limits or have questions about enterprise pricing?{' '}
+            <div className="bg-gray-50 border border-gray-200 rounded-3xl p-8 max-w-2xl mx-auto">
+              <p className="text-gray-700 leading-relaxed mb-4">
+                Need custom limits or have questions about enterprise pricing? We&apos;ll help you find the perfect solution.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a 
+                  href="/contact"
+                  className="inline-block px-6 py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors"
+                >
+                  Contact Sales Team
+                </a>
+                <span className="text-gray-600">or</span>
                 <a 
                   href="mailto:rajan@dubtitle.com" 
-                  className="text-yellow-300 hover:text-yellow-200 underline font-medium transition-colors"
+                  className="text-gray-700 hover:text-black underline font-medium transition-colors"
                 >
-                  Contact us at rajan@dubtitle.com
+                  rajan@dubtitle.com
                 </a>
-                {' '}and we&apos;ll help you find the perfect solution.
-              </p>
+              </div>
             </div>
           </div>
         </div>
