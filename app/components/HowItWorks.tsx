@@ -1,42 +1,43 @@
 'use client';
 
-import { useCurrency } from '../../lib/currency-context';
-import { formatPrice } from '../../lib/pricing';
 
-export default function HowItWorks() {
-  const { currency } = useCurrency();
-  
-  const steps = [
-    {
-      number: "01",
-      title: "Upload your video",
-      description: "Simply drag and drop your video file or paste a YouTube link. We support all major formats.",
-      icon: "📤"
-    },
-    {
-      number: "02", 
-      title: "Choose target language",
-      description: "Select from 29 languages. Our AI analyzes the speech patterns and emotional context.",
-      icon: "🌍"
-    },
-    {
-      number: "03",
-      title: "AI processes your content", 
-      description: "Advanced AI creates natural-sounding dubbing while maintaining lip-sync and emotion.",
-      icon: "🤖"
-    },
-    {
-      number: "04",
-      title: "Download & share",
-      description: "Get your dubbed video in minutes, ready to publish across all platforms.",
-      icon: "🎯"
-    }
-  ];
+interface Step {
+  number: string;
+  title: string;
+  description: string;
+  icon: string;
+}
 
-  // Pricing for comparison - using starter plan pricing
-  const starterPrice = currency === 'INR' ? 630 : 7;
-  const traditionalPriceRange = currency === 'INR' ? '₹45,000-4,50,000+' : '$500-5000+';
+interface ComparisonFeature {
+  text: string;
+  subtext: string;
+}
 
+interface HowItWorksProps {
+  badgeText: string;
+  title: string;
+  subtitle: string;
+  steps: Step[];
+  comparisonTitle: string;
+  comparisonSubtitle: string;
+  traditionalDubbingTitle: string;
+  traditionalDubbingFeatures: ComparisonFeature[];
+  aiDubbingTitle: string;
+  aiDubbingFeatures: ComparisonFeature[];
+}
+
+export default function HowItWorks({
+  badgeText,
+  title,
+  subtitle,
+  steps,
+  comparisonTitle,
+  comparisonSubtitle,
+  traditionalDubbingTitle,
+  traditionalDubbingFeatures,
+  aiDubbingTitle,
+  aiDubbingFeatures,
+}: HowItWorksProps) {
   return (
     <section className="py-20 bg-white relative overflow-hidden" id="features">
       {/* Background decoration */}
@@ -50,14 +51,14 @@ export default function HowItWorks() {
         <div className="max-w-4xl mx-auto text-center mb-16">
           <div className="inline-flex items-center bg-gray-100 rounded-full px-4 py-2 mb-8">
             <span className="w-2 h-2 bg-gray-600 rounded-full mr-2"></span>
-            <span className="text-gray-700 text-sm font-medium">Simple 4-step process</span>
+            <span className="text-gray-700 text-sm font-medium">{badgeText}</span>
           </div>
           
           <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-            How it works
+            {title}
           </h2>
           <p className="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
-            From upload to download in just 4 simple steps. No technical expertise required.
+            {subtitle}
           </p>
         </div>
 
@@ -90,10 +91,10 @@ export default function HowItWorks() {
         <div className="max-w-6xl mx-auto mt-24">
           <div className="text-center mb-16">
             <h3 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Why choose DubTitle?
+              {comparisonTitle}
             </h3>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              See how our AI-powered solution compares to traditional dubbing methods
+              {comparisonSubtitle}
             </p>
           </div>
           
@@ -104,38 +105,19 @@ export default function HowItWorks() {
                 <div className="w-12 h-12 bg-gray-400 rounded-2xl flex items-center justify-center mr-4">
                   <span className="text-white text-xl">❌</span>
                 </div>
-                <h4 className="text-2xl font-bold text-gray-900">Traditional dubbing</h4>
+                <h4 className="text-2xl font-bold text-gray-900">{traditionalDubbingTitle}</h4>
               </div>
               
               <div className="space-y-6">
-                <div className="flex items-start">
-                  <span className="text-gray-500 mr-4 mt-1 text-lg">•</span>
-                  <div>
-                    <span className="text-gray-800 font-semibold">2-4 weeks production time</span>
-                    <p className="text-gray-600 text-sm mt-1">Complex coordination between multiple teams</p>
+                {traditionalDubbingFeatures.map((feature, index) => (
+                  <div key={index} className="flex items-start">
+                    <span className="text-gray-500 mr-4 mt-1 text-lg">•</span>
+                    <div>
+                      <span className="text-gray-800 font-semibold">{feature.text}</span>
+                      <p className="text-gray-600 text-sm mt-1">{feature.subtext}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-start">
-                  <span className="text-gray-500 mr-4 mt-1 text-lg">•</span>
-                  <div>
-                    <span className="text-gray-800 font-semibold">{traditionalPriceRange} per video</span>
-                    <p className="text-gray-600 text-sm mt-1">High costs for professional voice actors</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <span className="text-gray-500 mr-4 mt-1 text-lg">•</span>
-                  <div>
-                    <span className="text-gray-800 font-semibold">Complex coordination required</span>
-                    <p className="text-gray-600 text-sm mt-1">Multiple vendors and scheduling challenges</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <span className="text-gray-500 mr-4 mt-1 text-lg">•</span>
-                  <div>
-                    <span className="text-gray-800 font-semibold">Limited language options</span>
-                    <p className="text-gray-600 text-sm mt-1">Only 5-10 languages typically available</p>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
             
@@ -149,38 +131,19 @@ export default function HowItWorks() {
                 <div className="w-12 h-12 bg-gray-400 rounded-2xl flex items-center justify-center mr-4">
                   <span className="text-white text-xl">✅</span>
                 </div>
-                <h4 className="text-2xl font-bold text-gray-900">DubTitle AI</h4>
+                <h4 className="text-2xl font-bold text-gray-900">{aiDubbingTitle}</h4>
               </div>
               
               <div className="space-y-6">
-                <div className="flex items-start">
-                  <span className="text-gray-600 mr-4 mt-1 text-lg">•</span>
-                  <div>
-                    <span className="text-gray-800 font-semibold">2-10 minutes processing</span>
-                    <p className="text-gray-600 text-sm mt-1">Lightning-fast AI-powered dubbing</p>
+                {aiDubbingFeatures.map((feature, index) => (
+                  <div key={index} className="flex items-start">
+                    <span className="text-gray-600 mr-4 mt-1 text-lg">•</span>
+                    <div>
+                      <span className="text-gray-800 font-semibold">{feature.text}</span>
+                      <p className="text-gray-600 text-sm mt-1">{feature.subtext}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-start">
-                  <span className="text-gray-600 mr-4 mt-1 text-lg">•</span>
-                  <div>
-                    <span className="text-gray-800 font-semibold">Starting from {formatPrice(starterPrice, currency)}/month</span>
-                    <p className="text-gray-600 text-sm mt-1">Unlimited videos with monthly subscription</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <span className="text-gray-600 mr-4 mt-1 text-lg">•</span>
-                  <div>
-                    <span className="text-gray-800 font-semibold">One-click solution</span>
-                    <p className="text-gray-600 text-sm mt-1">Upload, select language, download - that&apos;s it!</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <span className="text-gray-600 mr-4 mt-1 text-lg">•</span>
-                  <div>
-                    <span className="text-gray-800 font-semibold">29 languages available</span>
-                    <p className="text-gray-600 text-sm mt-1">More languages than traditional dubbing</p>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>

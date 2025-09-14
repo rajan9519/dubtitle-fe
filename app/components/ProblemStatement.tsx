@@ -1,37 +1,40 @@
-export default function ProblemStatement() {
-  const features = [
-    {
-      icon: "🎯",
-      title: "Voice cloning technology",
-      description: "Our AI preserves the original speaker's voice characteristics, tone, and emotion across languages."
-    },
-    {
-      icon: "🔄",
-      title: "Natural speech patterns",
-      description: "Advanced algorithms maintain natural rhythm and flow for authentic-sounding results."
-    },
-    {
-      icon: "⚡",
-      title: "Lightning fast",
-      description: "What takes traditional studios weeks, we accomplish in minutes with cutting-edge AI processing."
-    },
-    {
-      icon: "🌍",
-      title: "29 languages",
-      description: "Expand your reach globally with support for major world languages and regional dialects."
-    }
-  ];
 
+interface Feature {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+interface UseCase {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+interface ProblemStatementProps {
+  title: string;
+  subtitle: string;
+  features: Feature[];
+  useCasesTitle: string;
+  useCases: UseCase[];
+}
+
+export default function ProblemStatement({
+  title,
+  subtitle,
+  features,
+  useCasesTitle,
+  useCases,
+}: ProblemStatementProps) {
   return (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-6">
         <div className="max-w-4xl mx-auto text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Powered by breakthrough AI
+            {title}
           </h2>
           <p className="text-xl text-gray-600 leading-relaxed">
-            Our advanced AI technology delivers studio-quality dubbing that preserves emotion 
-            and sounds completely natural.
+            {subtitle}
           </p>
         </div>
 
@@ -49,29 +52,17 @@ export default function ProblemStatement() {
 
         {/* Use Cases */}
         <div className="max-w-4xl mx-auto mt-20">
-          <h3 className="text-3xl font-bold text-gray-900 text-center mb-12">Perfect for</h3>
+          <h3 className="text-3xl font-bold text-gray-900 text-center mb-12">{useCasesTitle}</h3>
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🎬</span>
+            {useCases.map((useCase, index) => (
+              <div key={index} className="text-center">
+                <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">{useCase.icon}</span>
+                </div>
+                <h4 className="text-lg font-semibold text-gray-900 mb-2">{useCase.title}</h4>
+                <p className="text-gray-600">{useCase.description}</p>
               </div>
-              <h4 className="text-lg font-semibold text-gray-900 mb-2">Content Creators</h4>
-              <p className="text-gray-600">YouTubers, TikTokers, and social media influencers expanding globally</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🏢</span>
-              </div>
-              <h4 className="text-lg font-semibold text-gray-900 mb-2">Businesses</h4>
-              <p className="text-gray-600">Companies creating multilingual marketing and training content</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🎓</span>
-              </div>
-              <h4 className="text-lg font-semibold text-gray-900 mb-2">Educators</h4>
-              <p className="text-gray-600">Teachers and trainers making content accessible worldwide</p>
-            </div>
+            ))}
           </div>
         </div>
       </div>

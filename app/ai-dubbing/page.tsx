@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import { CheckCircleIcon } from '@heroicons/react/20/solid';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { trackButtonClick } from '../components/GoogleAnalytics';
 
 
 const features = [
@@ -42,13 +43,13 @@ export default function AiDubbingPage() {
         </div>
         
         <div className="hidden md:flex items-center space-x-6">
+          <a href="#features" className="text-gray-700 hover:text-black transition-colors font-medium">Features</a>
           <a href="/pricing" className="text-gray-700 hover:text-black transition-colors font-medium">Pricing</a>
-          <a href="/ai-dubbing" className="text-gray-700 hover:text-black transition-colors font-medium">AI Dubbing</a>
-          <a href="/contact" className="text-gray-700 hover:text-black transition-colors font-medium">Contact</a>
           <button
             onClick={() => {
               if (loginLoading) return;
               setLoginLoading(true);
+              trackButtonClick('Login', 'Hero Navigation');
               router.push('/login');
             }}
             disabled={loginLoading}
@@ -60,6 +61,7 @@ export default function AiDubbingPage() {
             onClick={() => {
               if (loginLoading) return;
               setLoginLoading(true);
+              trackButtonClick('Sign Up', 'Hero Navigation');
               router.push('/signup');
             }}
             disabled={loginLoading}
@@ -67,12 +69,22 @@ export default function AiDubbingPage() {
           >
             {loginLoading ? 'Loading...' : 'Sign up'}
           </button>
+          <button
+            onClick={() => {
+              trackButtonClick('Contact Sales', 'Hero Navigation');
+              router.push('/contact');
+            }}
+            className="px-4 py-2 border border-gray-300 text-gray-700 font-medium rounded-lg hover:border-gray-400 hover:text-black transition-colors cursor-pointer"
+          >
+            Contact Sales
+          </button>
         </div>
         
         {/* Mobile Menu */}
         <div className="md:hidden flex items-center space-x-3">
           <button
             onClick={() => {
+              trackButtonClick('Contact Sales Mobile', 'Hero Navigation');
               router.push('/contact');
             }}
             className="px-3 py-2 border border-gray-300 text-gray-700 font-medium rounded-lg hover:border-gray-400 hover:text-black transition-colors text-sm"
@@ -83,6 +95,7 @@ export default function AiDubbingPage() {
             onClick={() => {
               if (loginLoading) return;
               setLoginLoading(true);
+              trackButtonClick('Sign Up Mobile', 'Hero Navigation');
               router.push('/signup');
             }}
             disabled={loginLoading}
@@ -118,15 +131,27 @@ export default function AiDubbingPage() {
                   Reach a global audience with fast, accurate, and natural-sounding AI-powered video dubbing. Expand your reach, boost engagement, and grow your brand.
                 </p>
                 <div className="mt-10 flex items-center justify-center gap-x-6">
-                  <a
-                    href="/signup"
+                  <button
+                    onClick={() => {
+                      if (loginLoading) return;
+                      setLoginLoading(true);
+                      trackButtonClick('Get Started Free', 'Hero Section');
+                      router.push('/signup');
+                    }}
+                    disabled={loginLoading}
                     className="px-8 py-4 bg-black text-white font-semibold text-lg rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50"
                   >
-                    Get started for free
-                  </a>
-                  <a href="/contact" className="px-8 py-4 border-2 border-gray-300 text-gray-700 font-semibold text-lg rounded-lg hover:border-gray-400 hover:text-black transition-colors">
+                    {loginLoading ? 'Loading...' : 'Get started for free'}
+                  </button>
+                  <button
+                    onClick={() => {
+                      trackButtonClick('Contact Sales', 'Hero Section');
+                      router.push('/contact');
+                    }}
+                    className="px-8 py-4 border-2 border-gray-300 text-gray-700 font-semibold text-lg rounded-lg hover:border-gray-400 hover:text-black transition-colors"
+                  >
                     Contact sales
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
@@ -134,7 +159,7 @@ export default function AiDubbingPage() {
         </div>
 
         {/* Feature section */}
-        <div className="mx-auto mt-16 max-w-7xl px-6 sm:mt-24 lg:px-8">
+        <div id="features" className="mx-auto mt-16 max-w-7xl px-6 sm:mt-24 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center">
             <h2 className="text-base font-semibold leading-7 text-blue-600">Go Global</h2>
             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -195,12 +220,18 @@ export default function AiDubbingPage() {
                         Start dubbing your videos with AI today and connect with viewers worldwide.
                     </p>
                     <div className="mt-10 flex items-center justify-center gap-x-6">
-                        <a
-                            href="/signup"
-                            className="px-8 py-4 bg-black text-white font-semibold text-lg rounded-lg hover:bg-gray-800 transition-colors"
+                        <button
+                            onClick={() => {
+                              if (loginLoading) return;
+                              setLoginLoading(true);
+                              trackButtonClick('Get Started Free', 'Bottom CTA');
+                              router.push('/signup');
+                            }}
+                            disabled={loginLoading}
+                            className="px-8 py-4 bg-black text-white font-semibold text-lg rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50"
                         >
-                            Get started for free
-                        </a>
+                            {loginLoading ? 'Loading...' : 'Get started for free'}
+                        </button>
                     </div>
                 </div>
             </div>

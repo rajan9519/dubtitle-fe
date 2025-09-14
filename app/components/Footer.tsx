@@ -2,9 +2,9 @@ export default function Footer() {
   return (
     <footer className="bg-white border-t border-gray-200">
       <div className="container mx-auto px-6 py-12">
-        <div className="grid md:grid-cols-5 gap-8">
+        <div className="grid md:grid-cols-6 gap-6">
           {/* Brand */}
-          <div className="md:col-span-1">
+          <div>
             <div className="flex items-center space-x-3 mb-4">
               <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
                 <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -36,7 +36,16 @@ export default function Footer() {
               {/* <li><a href="/about" className="text-gray-600 hover:text-gray-900 transition-colors">About</a></li> */}
               {/* <li><a href="/careers" className="text-gray-600 hover:text-gray-900 transition-colors">Careers</a></li> */}
               <li><a href="/contact" className="text-gray-600 hover:text-gray-900 transition-colors">Contact</a></li>
-              {/* <li><a href="/blog" className="text-gray-600 hover:text-gray-900 transition-colors">Blog</a></li> */}
+            </ul>
+          </div>
+
+          {/* Resources */}
+          <div>
+            <h3 className="font-semibold text-gray-900 mb-4">Resources</h3>
+            <ul className="space-y-2">
+              <li><a href="/best-ai-video-dubbing" className="text-gray-600 hover:text-gray-900 transition-colors">Best AI Video Dubbing</a></li>
+              <li><a href="/elevenlabs-dubbing-alternatives" className="text-gray-600 hover:text-gray-900 transition-colors">ElevenLabs Alternatives</a></li>
+              <li><a href="/ai-dubbing" className="text-gray-600 hover:text-gray-900 transition-colors">AI Dubbing</a></li>
             </ul>
           </div>
 

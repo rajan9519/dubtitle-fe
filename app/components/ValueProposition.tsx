@@ -1,47 +1,30 @@
 'use client';
 
-export default function ValueProposition() {
-  const testimonials = [
-    {
-      name: "Voice Worth Hearing",
-      role: "YouTube Creator",
-      avatar: "👨🏻‍💻",
-      rating: 5,
-      content: "I use this to dub famous informative videos in Hindi for Indian people to learn from. My audience can now access valuable educational content in their native language. The quality makes complex topics easy to understand."
-    },
-    {
-      name: "Lakshit Ukani",
-      role: "Udemy Instructor",
-      avatar: "👨🏽‍🏫",
-      rating: 4,
-      content: "I am using this for my Udemy courses and it has been a game changer. Students from different countries can now access my content in their native languages. The technical accuracy is spot on."
-    },
-    {
-      name: "Somorik",
-      role: "Content Enthusiast",
-      avatar: "👨🏻‍🎬",
-      rating: 5,
-      content: "I use this to dub US shows in Russian for my personal enjoyment. It is amazing how I can now enjoy my favorite American series in Russian. The voice quality makes it feel natural."
-    },
-    {
-      name: "Riley P.",
-      role: "Indie Filmmaker",
-      avatar: "👩🏼‍🎬",
-      rating: 4,
-      content: "Used it for my short film festival submissions. The quality varies by language - French was great, Mandarin needed some tweaks. But hey, it got my film seen internationally."
-    }
-  ];
+interface Testimonial {
+  name: string;
+  role: string;
+  avatar: string;
+  rating: number;
+  content: string;
+}
 
+interface ValuePropositionProps {
+  title: string;
+  subtitle:string;
+  testimonials: Testimonial[];
+}
+
+export default function ValueProposition({ title, subtitle, testimonials }: ValuePropositionProps) {
   return (
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              What our users say
+              {title}
             </h2>
             <p className="text-xl text-gray-600 leading-relaxed">
-              Real feedback from creators who transformed their content reach
+              {subtitle}
             </p>
           </div>
           

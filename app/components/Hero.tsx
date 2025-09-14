@@ -4,7 +4,19 @@ import { useRouter } from 'next/navigation';
 import { useState, useRef } from 'react';
 import { trackButtonClick } from './GoogleAnalytics';
 
-export default function Hero() {
+interface Stat {
+  value: string;
+  label: string;
+}
+
+interface HeroProps {
+  badgeText: string;
+  title: React.ReactNode;
+  subtitle: string;
+  stats: Stat[];
+}
+
+export default function Hero({ badgeText, title, subtitle, stats }: HeroProps) {
   const router = useRouter();
   const [loginLoading, setLoginLoading] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<'hindi' | 'english'>('hindi');
@@ -144,20 +156,17 @@ export default function Hero() {
           {/* Badge */}
           <div className="inline-flex items-center bg-gray-100 rounded-full px-4 py-2 mb-8">
             <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-            <span className="text-gray-800 text-sm font-medium">AI-powered dubbing platform</span>
+            <span className="text-gray-800 text-sm font-medium">{badgeText}</span>
           </div>
 
           {/* Main Headline */}
           <h1 className="text-5xl md:text-7xl font-bold mb-8 leading-tight text-gray-900">
-            The most realistic
-            <br />
-            <span className="text-blue-600">voice dubbing</span> platform
+            {title}
           </h1>
 
           {/* Subtitle */}
           <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
-            AI dubbing that preserves emotion and natural speech patterns. 
-            Transform your content for global audiences in minutes, not weeks.
+            {subtitle}
           </p>
 
           {/* CTA Button */}
@@ -262,22 +271,12 @@ export default function Hero() {
       <div className="container mx-auto px-6 pb-20">
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-3xl font-bold text-gray-900 mb-2">29</div>
-              <div className="text-gray-600">Languages supported</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-gray-900 mb-2">200+</div>
-              <div className="text-gray-600">Videos dubbed</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-gray-900 mb-2">3min</div>
-              <div className="text-gray-600">Average processing time</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-gray-900 mb-2">95%</div>
-              <div className="text-gray-600">Voice accuracy</div>
-            </div>
+            {stats.map((stat, index) => (
+              <div key={index}>
+                <div className="text-3xl font-bold text-gray-900 mb-2">{stat.value}</div>
+                <div className="text-gray-600">{stat.label}</div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
