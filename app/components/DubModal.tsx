@@ -374,6 +374,7 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
         },
         body: JSON.stringify({
           resource_id: resourceId,
+          origin: 'dubtitle.com'
         }),
       });
 
