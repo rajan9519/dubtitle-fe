@@ -364,6 +364,33 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
     }
   };
 
+  const markUploadComplete = async (resourceId: string) => {
+    try {
+      console.log('Marking upload as complete for resource ID:', resourceId);
+      const response = await fetch(`${API_BASE_URL}/upload`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          resource_id: resourceId,
+        }),
+      });
+
+      if (!response.ok) {
+        console.warn(`Failed to mark upload as complete: ${response.statusText}`);
+        return;
+      }
+
+      const result = await response.json();
+      console.log('Upload marked as complete successfully:', result);
+      return result;
+    } catch (error) {
+      console.warn('Error marking upload as complete (non-blocking):', error);
+      // Don't throw - this shouldn't block the upload flow
+    }
+  };
+
   const handleUpload = async (fileToUpload: File) => {
     setUploading(true);
     setUploadProgress(0);
@@ -388,6 +415,10 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
       
       console.log('File uploaded successfully, resource ID:', uploadResult.resourceId);
       console.log('Object key:', uploadResult.objectKey);
+      
+      // Mark upload as complete
+      await markUploadComplete(uploadResult.resourceId);
+      
       return true;
     } catch (error) {
       console.error('Upload error:', error);
