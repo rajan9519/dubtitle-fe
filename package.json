@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.8",
+    "@heroicons/react": "^2.2.0",
     "@next/third-parties": "^15.3.4",
     "@workos-inc/authkit-nextjs": "^2.4.2",
     "@workos-inc/node": "^7.58.0",
