@@ -287,7 +287,7 @@ export default function DubModal({ isOpen, onClose }: DubModalProps) {
       body: JSON.stringify({
         filename: file.name,
         content_type: file.type,
-        source: 'dubtitle.com'
+        origin: 'dubtitle.com'
       }),
     });
 
