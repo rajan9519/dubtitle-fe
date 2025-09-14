@@ -5,11 +5,6 @@ import { CheckCircleIcon } from '@heroicons/react/20/solid';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-const navigation = [
-  { name: 'Pricing', href: '/pricing' },
-  { name: 'AI Dubbing', href: '/ai-dubbing' },
-  { name: 'Contact', href: '/contact' },
-]
 
 const features = [
   {
@@ -33,7 +28,6 @@ const features = [
 export default function AiDubbingPage() {
   const router = useRouter();
   const [loginLoading, setLoginLoading] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   return (
     <div className="bg-white">
       <header className="absolute inset-x-0 top-0 z-50">
@@ -147,7 +141,7 @@ export default function AiDubbingPage() {
               Everything you need to expand your audience
             </p>
             <p className="mt-6 text-lg leading-8 text-gray-600">
-              Dubtitle's AI dubbing service empowers content creators to break language barriers and connect with viewers worldwide.
+              Dubtitle&apos;s AI dubbing service empowers content creators to break language barriers and connect with viewers worldwide.
             </p>
           </div>
           <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
