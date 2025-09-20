@@ -48,16 +48,17 @@ export default function Pricing() {
         </div>
 
         {/* Pricing Cards */}
-        <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-8">
-          {pricingPlans.map((plan) => (
-            <div
-              key={plan.id}
-              className={`relative rounded-2xl p-8 ${
-                plan.popular 
-                  ? 'bg-white border-4 border-black scale-105' 
-                  : 'bg-white border border-gray-200'
-              }`}
-            >
+        <div className="max-w-7xl mx-auto">
+          <div className="flex gap-6 overflow-x-auto pb-4 px-2 pt-8 scrollbar-hide">
+            {pricingPlans.map((plan) => (
+              <div
+                key={plan.id}
+                className={`relative rounded-2xl p-8 flex-shrink-0 w-80 ${
+                  plan.popular 
+                    ? 'bg-white border-4 border-black scale-105' 
+                    : 'bg-white border border-gray-200'
+                }`}
+              >
               {plan.popular && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
                   Most popular
@@ -71,12 +72,22 @@ export default function Pricing() {
                 
                 <div className="mb-6">
                   <div className="text-4xl font-bold text-gray-900">
-                    {getOriginalPriceForTimeRange(plan, currency) && (
-                      <span className="text-2xl line-through mr-2 text-gray-500">
-                        {formatPrice(getOriginalPriceForTimeRange(plan, currency)!, currency)}
-                      </span>
-                    )}
-                    <span>{formatPrice(getPriceForTimeRange(plan, currency), currency)}</span>
+                    {(() => {
+                      const originalPrice = getOriginalPriceForTimeRange(plan, currency);
+                      const currentPrice = getPriceForTimeRange(plan, currency);
+                      const shouldShowOriginal = originalPrice && originalPrice !== currentPrice;
+                      
+                      return (
+                        <>
+                          {shouldShowOriginal && (
+                            <span className="text-2xl line-through mr-2 text-gray-500">
+                              {formatPrice(originalPrice, currency)}
+                            </span>
+                          )}
+                          <span>{formatPrice(currentPrice, currency)}</span>
+                        </>
+                      );
+                    })()}
                   </div>
                   <div className="text-sm text-gray-600">
                     {plan.duration} {'/ month'}
@@ -112,6 +123,7 @@ export default function Pricing() {
               </div>
             </div>
           ))}
+          </div>
         </div>
 
       </div>

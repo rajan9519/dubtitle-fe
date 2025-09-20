@@ -145,17 +145,19 @@ export default function PricingPage() {
           </div>
 
           {/* Pricing Cards */}
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            {pricingPlans.map((plan) => (
-              <div
-                key={plan.id}
-                className={`
-                  ${plan.popular 
-                    ? 'bg-white text-gray-900 rounded-3xl p-8 text-center relative transform scale-105 shadow-2xl flex flex-col border-4 border-black' 
-                    : 'bg-white border border-gray-200 rounded-3xl p-8 text-center flex flex-col shadow-lg'
-                  }
-                `}
-              >
+          <div className="mb-12">
+            <div className="flex gap-6 overflow-x-auto pb-4 px-2 pt-8 scrollbar-hide">
+              {pricingPlans.map((plan) => (
+                <div
+                  key={plan.id}
+                  className={`
+                    flex-shrink-0 w-80
+                    ${plan.popular 
+                      ? 'bg-white text-gray-900 rounded-3xl p-8 text-center relative transform scale-105 shadow-2xl flex flex-col border-4 border-black' 
+                      : 'bg-white border border-gray-200 rounded-3xl p-8 text-center flex flex-col shadow-lg'
+                    }
+                  `}
+                >
                 {plan.popular && (
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-bold">
                     Most popular
@@ -167,14 +169,24 @@ export default function PricingPage() {
                 </div>
                 
                 <div className={`text-4xl font-bold mb-4 ${plan.popular ? 'text-gray-900' : 'text-gray-900'}`}>
-                  {getOriginalPriceForTimeRange(plan, currency) && (
-                    <span className={`line-through mr-2 ${plan.popular ? 'text-gray-500' : 'text-gray-500'}`}>
-                      {formatPrice(getOriginalPriceForTimeRange(plan, currency)!, currency)}
-                    </span>
-                  )}
-                  <span className={plan.popular ? 'text-gray-900' : 'text-gray-900'}>
-                    {formatPrice(getPriceForTimeRange(plan, currency), currency)}
-                  </span>
+                  {(() => {
+                    const originalPrice = getOriginalPriceForTimeRange(plan, currency);
+                    const currentPrice = getPriceForTimeRange(plan, currency);
+                    const shouldShowOriginal = originalPrice && originalPrice !== currentPrice;
+                    
+                    return (
+                      <>
+                        {shouldShowOriginal && (
+                          <span className={`line-through mr-2 ${plan.popular ? 'text-gray-500' : 'text-gray-500'}`}>
+                            {formatPrice(originalPrice, currency)}
+                          </span>
+                        )}
+                        <span className={plan.popular ? 'text-gray-900' : 'text-gray-900'}>
+                          {formatPrice(currentPrice, currency)}
+                        </span>
+                      </>
+                    );
+                  })()}
                 </div>
                 
                 <div className={`mb-6 ${plan.popular ? 'text-gray-600' : 'text-gray-600'}`}>
@@ -222,6 +234,7 @@ export default function PricingPage() {
                 </button>
               </div>
             ))}
+            </div>
           </div>
 
           {/* Security and Support */}

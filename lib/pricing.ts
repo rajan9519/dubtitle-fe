@@ -66,12 +66,12 @@ export const pricingPlans: PricingPlan[] = [
     price: 0,
     priceINR: 0,
     duration: '5 minutes of dubbing',
-    maxPerVideoMinutes: 0.5,
+    maxPerVideoMinutes: 1,
     features: [
       'AI dubbing in 30 languages',
       'Advanced Voice cloning',
       'HD quality output',
-      'Maximum 30 seconds per video/audio',
+      'Maximum 60 seconds per video/audio',
       '5 voice style options',
       'Email support'
     ],
@@ -82,11 +82,11 @@ export const pricingPlans: PricingPlan[] = [
   {
     id: 'starter',
     name: 'STARTER',
-    price: 7,
-    priceINR: 630,
-    originalPrice: 10,
-    originalPriceINR: 900,
-    duration: '20 minutes of dubbing',
+    price: 5,
+    priceINR: 399,
+    originalPrice: 7,
+    originalPriceINR: 599,
+    duration: '10 minutes of dubbing',
     maxPerVideoMinutes: 2,
     features: [
       'Everything in Free',
@@ -97,25 +97,61 @@ export const pricingPlans: PricingPlan[] = [
     checkoutUrl: process.env.NEXT_PUBLIC_LEMONSQUEEZY_STARTER_CHECKOUT_URL,
     checkoutPath: '/checkout/starter',
     buttonText: 'Get Starter Plan',
+    buttonAction: 'checkout'
+  },
+  {
+    id: 'creator',
+    name: 'CREATOR',
+    price: 22,
+    priceINR: 1799,
+    originalPrice: 30,
+    originalPriceINR: 2499,
+    duration: '45 minutes of dubbing',
+    maxPerVideoMinutes: 10,
+    features: [
+      'Everything in Starter',
+      // 'Maximum 30 minutes per video/audio'
+    ],
+    checkoutUrl: process.env.NEXT_PUBLIC_LEMONSQUEEZY_CREATOR_CHECKOUT_URL,
+    checkoutPath: '/checkout/creator',
+    buttonText: 'Get Creator Plan',
     buttonAction: 'checkout',
     popular: true
   },
   {
     id: 'professional',
     name: 'PROFESSIONAL',
-    price: 25,
-    priceINR: 2250,
-    originalPrice: 40,
-    originalPriceINR: 3600,
-    duration: '90 minutes of dubbing',
+    price: 45,
+    priceINR: 4049,
+    originalPrice: 49,
+    originalPriceINR: 4049,
+    duration: '100 minutes of dubbing',
     maxPerVideoMinutes: 10,
     features: [
-      'Everything in Starter',
+      'Everything in Creator',
       // 'Maximum 30 minutes per video/audio'
     ],
     checkoutUrl: process.env.NEXT_PUBLIC_LEMONSQUEEZY_PROFESSIONAL_CHECKOUT_URL,
     checkoutPath: '/checkout/professional',
     buttonText: 'Get Professional Plan',
+    buttonAction: 'checkout'
+  },
+  {
+    id: 'scale',
+    name: 'SCALE',
+    price: 99,
+    priceINR: 8499,
+    originalPrice: 99,
+    originalPriceINR: 8499,
+    duration: '250 minutes of dubbing',
+    maxPerVideoMinutes: 10,
+    features: [
+      'Everything in Creator',
+      // 'Maximum 30 minutes per video/audio'
+    ],
+    checkoutUrl: process.env.NEXT_PUBLIC_LEMONSQUEEZY_SCALE_CHECKOUT_URL,
+    checkoutPath: '/checkout/professional',
+    buttonText: 'Get Scale Plan',
     buttonAction: 'checkout'
   }
 ];
